@@ -10,11 +10,7 @@ export default function App() {
   return (
     <>
       <div className="w-full">
-        <Navbar />
-        <Hero />
-        <About />
-        <Services />
-        <Menu/>
+        <Menu />
       </div>
     </>
   );

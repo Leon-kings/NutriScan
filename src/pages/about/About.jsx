@@ -348,7 +348,7 @@ export const About = () => {
   return (
     <div className="bg-gray-50">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-gray-900 to-gray-800 text-white overflow-hidden">
+      <div className="relative  overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full filter blur-3xl"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl"></div>
@@ -364,11 +364,10 @@ export const About = () => {
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
               About QR Restaurant
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8">
+            <p className="text-xl md:text-2xl text-gray-800 mb-8">
               Revolutionizing the dining experience with AI-powered safety and
               seamless ordering
             </p>
-
           </motion.div>
         </div>
 
@@ -408,154 +407,188 @@ export const About = () => {
       </div>
 
       {/* Mission & Vision Tabs */}
-      <div className="container mx-auto px-4 py-20">
-        <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-full p-1 shadow-md inline-flex">
-            <button
-              onClick={() => setActiveTab("mission")}
-              className={`px-6 py-2 rounded-full font-semibold transition ${
-                activeTab === "mission"
-                  ? "bg-gradient-to-r from-orange-500 to-red-500 text-white"
-                  : "text-gray-600 hover:text-gray-800"
-              }`}
-            >
-              Our Mission
-            </button>
-            <button
-              onClick={() => setActiveTab("vision")}
-              className={`px-6 py-2 rounded-full font-semibold transition ${
-                activeTab === "vision"
-                  ? "bg-gradient-to-r from-orange-500 to-red-500 text-white"
-                  : "text-gray-600 hover:text-gray-800"
-              }`}
-            >
-              Our Vision
-            </button>
-            <button
-              onClick={() => setActiveTab("values")}
-              className={`px-6 py-2 rounded-full font-semibold transition ${
-                activeTab === "values"
-                  ? "bg-gradient-to-r from-orange-500 to-red-500 text-white"
-                  : "text-gray-600 hover:text-gray-800"
-              }`}
-            >
-              Our Values
-            </button>
-          </div>
-        </div>
+      <div
+        className="relative"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        {/* Overlay to make background image NOT clearly visible - adjust opacity as needed */}
+        <div className="absolute inset-0 bg-white/80"></div>
 
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="bg-white rounded-2xl shadow-xl p-8 md:p-12 text-center max-w-4xl mx-auto"
-        >
-          {activeTab === "mission" && (
-            <>
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+        <div className="relative z-10 container mx-auto px-4 py-20">
+          <div className="flex justify-center mb-8">
+            <div className="bg-white rounded-full p-1 shadow-md inline-flex">
+              <button
+                onClick={() => setActiveTab("mission")}
+                className={`px-6 py-2 rounded-full font-semibold transition ${
+                  activeTab === "mission"
+                    ? "bg-gradient-to-r from-orange-500 to-red-500 text-white"
+                    : "text-gray-600 hover:text-gray-800"
+                }`}
+              >
                 Our Mission
-              </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                To make dining safe, accessible, and delightful for everyone by
-                leveraging cutting-edge AI technology. We're committed to
-                eliminating food-related health risks and empowering customers
-                with real-time information about their meals.
-              </p>
-              <div className="mt-6 flex justify-center">
-                <div className="w-20 h-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full"></div>
-              </div>
-            </>
-          )}
-          {activeTab === "vision" && (
-            <>
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              </button>
+              <button
+                onClick={() => setActiveTab("vision")}
+                className={`px-6 py-2 rounded-full font-semibold transition ${
+                  activeTab === "vision"
+                    ? "bg-gradient-to-r from-orange-500 to-red-500 text-white"
+                    : "text-gray-600 hover:text-gray-800"
+                }`}
+              >
                 Our Vision
-              </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                A world where every restaurant meal is customized for individual
-                health needs, where allergies and dietary restrictions never
-                stand in the way of enjoying great food, and where technology
-                seamlessly connects customers, kitchens, and health data.
-              </p>
-              <div className="mt-6 flex justify-center">
-                <div className="w-20 h-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full"></div>
-              </div>
-            </>
-          )}
-          {activeTab === "values" && (
-            <>
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              </button>
+              <button
+                onClick={() => setActiveTab("values")}
+                className={`px-6 py-2 rounded-full font-semibold transition ${
+                  activeTab === "values"
+                    ? "bg-gradient-to-r from-orange-500 to-red-500 text-white"
+                    : "text-gray-600 hover:text-gray-800"
+                }`}
+              >
                 Our Values
-              </h2>
-              <div className="grid md:grid-cols-3 gap-6 text-left">
-                <div>
-                  <h3 className="font-bold text-orange-600 mb-2">
-                    Safety First
-                  </h3>
-                  <p className="text-gray-600">
-                    Customer health is our top priority
-                  </p>
+              </button>
+            </div>
+          </div>
+
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 md:p-12 text-center max-w-4xl mx-auto"
+          >
+            {activeTab === "mission" && (
+              <>
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                  Our Mission
+                </h2>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  To make dining safe, accessible, and delightful for everyone
+                  by leveraging cutting-edge AI technology. We're committed to
+                  eliminating food-related health risks and empowering customers
+                  with real-time information about their meals.
+                </p>
+                <div className="mt-6 flex justify-center">
+                  <div className="w-20 h-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full"></div>
                 </div>
-                <div>
-                  <h3 className="font-bold text-orange-600 mb-2">Innovation</h3>
-                  <p className="text-gray-600">Constantly improving with AI</p>
+              </>
+            )}
+            {activeTab === "vision" && (
+              <>
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                  Our Vision
+                </h2>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  A world where every restaurant meal is customized for
+                  individual health needs, where allergies and dietary
+                  restrictions never stand in the way of enjoying great food,
+                  and where technology seamlessly connects customers, kitchens,
+                  and health data.
+                </p>
+                <div className="mt-6 flex justify-center">
+                  <div className="w-20 h-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full"></div>
                 </div>
-                <div>
-                  <h3 className="font-bold text-orange-600 mb-2">
-                    Transparency
-                  </h3>
-                  <p className="text-gray-600">
-                    Clear ingredient and modification info
-                  </p>
+              </>
+            )}
+            {activeTab === "values" && (
+              <>
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                  Our Values
+                </h2>
+                <div className="grid md:grid-cols-3 gap-6 text-left">
+                  <div>
+                    <h3 className="font-bold text-orange-600 mb-2">
+                      Safety First
+                    </h3>
+                    <p className="text-gray-600">
+                      Customer health is our top priority
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-orange-600 mb-2">
+                      Innovation
+                    </h3>
+                    <p className="text-gray-600">
+                      Constantly improving with AI
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-orange-600 mb-2">
+                      Transparency
+                    </h3>
+                    <p className="text-gray-600">
+                      Clear ingredient and modification info
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </>
-          )}
-        </motion.div>
+              </>
+            )}
+          </motion.div>
+        </div>
       </div>
 
       {/* Features Section */}
-      <div className="bg-gray-100 py-20">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Why Choose Us?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Discover the features that make us the future of dining
-            </p>
-          </motion.div>
+      <div
+        className="relative"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1000')", // different image - restaurant dining table with food
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed", // optional: creates parallax effect
+        }}
+      >
+        {/* Overlay to make background image NOT clearly visible */}
+        <div className="absolute inset-0 bg-gray-100/85"></div>
 
-          <motion.div
-            ref={ref}
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            className="grid md:grid-cols-3 gap-8"
-          >
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition group"
-              >
-                <div
-                  className={`${feature.color} w-16 h-16 rounded-xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition`}
+        <div className="relative z-10 py-20">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-4xl font-bold text-gray-800 mb-4">
+                Why Choose Us?
+              </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                Discover the features that make us the future of dining
+              </p>
+            </motion.div>
+
+            <motion.div
+              ref={ref}
+              variants={containerVariants}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              className="grid md:grid-cols-3 gap-8"
+            >
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition group"
                 >
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </motion.div>
-            ))}
-          </motion.div>
+                  <div
+                    className={`${feature.color} w-16 h-16 rounded-xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition`}
+                  >
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600">{feature.description}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
 

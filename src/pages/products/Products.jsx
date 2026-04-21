@@ -1,9 +1,9 @@
+/* eslint-disable no-unused-vars */
 // Product.jsx
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 // Icons
 import {
   ShoppingCart as CartIcon,
