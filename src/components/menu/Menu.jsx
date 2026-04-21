@@ -5003,6 +5003,2142 @@
 //   );
 // };
 
+// import React, {
+//   useState,
+//   useEffect,
+//   useCallback,
+//   useMemo,
+//   useRef,
+// } from "react";
+// import axios from "axios";
+// import { motion, AnimatePresence } from "framer-motion";
+// import { toast, ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+// import {
+//   QrCodeScanner as QRIcon,
+//   ShoppingCart as CartIcon,
+//   AccessTime as TimeIcon,
+//   Close as CloseIcon,
+//   Add as AddIcon,
+//   Remove as RemoveIcon,
+//   Search as SearchIcon,
+//   Delete as DeleteIcon,
+//   CheckCircle as CheckCircleIcon,
+//   Error as ErrorIcon,
+//   WarningAmber as WarningAmberIcon,
+//   TableRestaurant as TableIcon,
+//   Timer as TimerIcon,
+//   HealthAndSafety as HealthIcon,
+//   Favorite as FavoriteIcon,
+//   Psychology as PsychologyIcon,
+//   Healing as HealingIcon,
+//   Science as ScienceIcon,
+//   Shield as ShieldIcon,
+//   FitnessCenter as FitnessIcon,
+//   Edit as EditIcon,
+//   Restaurant as RestaurantIcon,
+//   Person as PersonIcon,
+//   Dangerous as DangerousIcon,
+//   Warning as WarningIcon,
+//   Check as CheckIcon,
+// } from "@mui/icons-material";
+
+// // ========== MEDICAL CONDITIONS DATABASE ==========
+// const MEDICAL_CONDITIONS = [
+//   {
+//     id: 1,
+//     name: "Peanut Allergy",
+//     category: "Allergy",
+//     severity: "high",
+//     description: "Severe allergic reaction to peanuts",
+//   },
+//   {
+//     id: 2,
+//     name: "Tree Nut Allergy",
+//     category: "Allergy",
+//     severity: "high",
+//     description: "Allergic to almonds, walnuts, cashews, etc.",
+//   },
+//   {
+//     id: 3,
+//     name: "Shellfish Allergy",
+//     category: "Allergy",
+//     severity: "high",
+//     description: "Allergic to shrimp, crab, lobster",
+//   },
+//   {
+//     id: 4,
+//     name: "Fish Allergy",
+//     category: "Allergy",
+//     severity: "high",
+//     description: "Allergic to finned fish",
+//   },
+//   {
+//     id: 5,
+//     name: "Egg Allergy",
+//     category: "Allergy",
+//     severity: "moderate",
+//     description: "Allergic to eggs",
+//   },
+//   {
+//     id: 6,
+//     name: "Soy Allergy",
+//     category: "Allergy",
+//     severity: "moderate",
+//     description: "Allergic to soy products",
+//   },
+//   {
+//     id: 7,
+//     name: "Wheat Allergy",
+//     category: "Allergy",
+//     severity: "moderate",
+//     description: "Allergic to wheat",
+//   },
+//   {
+//     id: 8,
+//     name: "Milk Allergy",
+//     category: "Allergy",
+//     severity: "high",
+//     description: "Allergic to dairy products",
+//   },
+//   {
+//     id: 9,
+//     name: "Celiac Disease",
+//     category: "Autoimmune",
+//     severity: "high",
+//     description: "Cannot consume gluten",
+//   },
+//   {
+//     id: 10,
+//     name: "Lactose Intolerance",
+//     category: "Digestive",
+//     severity: "low",
+//     description: "Difficulty digesting lactose",
+//   },
+//   {
+//     id: 11,
+//     name: "Type 2 Diabetes",
+//     category: "Metabolic",
+//     severity: "moderate",
+//     description: "Blood sugar management needed",
+//   },
+//   {
+//     id: 12,
+//     name: "Type 1 Diabetes",
+//     category: "Metabolic",
+//     severity: "moderate",
+//     description: "Insulin dependent",
+//   },
+//   {
+//     id: 13,
+//     name: "Hypertension",
+//     category: "Cardiovascular",
+//     severity: "moderate",
+//     description: "High blood pressure",
+//   },
+//   {
+//     id: 14,
+//     name: "High Cholesterol",
+//     category: "Cardiovascular",
+//     severity: "moderate",
+//     description: "Cholesterol management needed",
+//   },
+//   {
+//     id: 15,
+//     name: "Gout",
+//     category: "Metabolic",
+//     severity: "moderate",
+//     description: "Uric acid buildup",
+//   },
+//   {
+//     id: 16,
+//     name: "GERD",
+//     category: "Digestive",
+//     severity: "low",
+//     description: "Acid reflux",
+//   },
+//   {
+//     id: 17,
+//     name: "Kidney Disease",
+//     category: "Renal",
+//     severity: "high",
+//     description: "Limited sodium and potassium",
+//   },
+//   {
+//     id: 18,
+//     name: "Migraine",
+//     category: "Neurological",
+//     severity: "low",
+//     description: "Trigger foods may cause headaches",
+//   },
+// ];
+
+// // ========== MENU ITEMS ==========
+// const MENU_ITEMS = [
+//   {
+//     id: 1,
+//     name: "Isombe ya Nyama",
+//     price: 2800,
+//     ingredients: [
+//       "cassava leaves",
+//       "beef",
+//       "coconut milk",
+//       "peanut flour",
+//       "palm oil",
+//     ],
+//     description: "Traditional cassava leaf stew with beef",
+//     prepTime: 18,
+//     category: "Mains",
+//     image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",
+//   },
+//   {
+//     id: 2,
+//     name: "Brochette de Boeuf",
+//     price: 3500,
+//     ingredients: ["beef sirloin", "pepper sauce", "potato", "spices", "salt"],
+//     description: "Grilled beef skewers with fries",
+//     prepTime: 15,
+//     category: "Mains",
+//     image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400",
+//   },
+//   {
+//     id: 3,
+//     name: "Ibiharage",
+//     price: 1800,
+//     ingredients: ["kidney beans", "palm oil", "tomato", "onion", "salt"],
+//     description: "Rwandan bean stew - vegan",
+//     prepTime: 12,
+//     category: "Vegan",
+//     image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400",
+//   },
+//   {
+//     id: 4,
+//     name: "Matoke ya Nyama",
+//     price: 3200,
+//     ingredients: [
+//       "green plantain",
+//       "goat meat",
+//       "ginger",
+//       "onion",
+//       "coconut oil",
+//     ],
+//     description: "Steamed plantain with goat stew",
+//     prepTime: 20,
+//     category: "Mains",
+//     image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400",
+//   },
+//   {
+//     id: 5,
+//     name: "Grilled Tilapia",
+//     price: 4500,
+//     ingredients: ["tilapia", "lemon", "garlic", "rosemary", "olive oil"],
+//     description: "Fresh lake tilapia",
+//     prepTime: 16,
+//     category: "Seafood",
+//     image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400",
+//   },
+//   {
+//     id: 6,
+//     name: "Chicken Shawarma",
+//     price: 4200,
+//     ingredients: ["chicken", "yogurt", "garlic", "spices", "pita"],
+//     description: "Marinated chicken wrap",
+//     prepTime: 15,
+//     category: "Mains",
+//     image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400",
+//   },
+//   {
+//     id: 7,
+//     name: "Beef Burger",
+//     price: 4800,
+//     ingredients: ["beef patty", "lettuce", "tomato", "cheese", "bun"],
+//     description: "Angus beef burger with cheese",
+//     prepTime: 12,
+//     category: "Mains",
+//     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
+//   },
+//   {
+//     id: 8,
+//     name: "Vegetable Pad Thai",
+//     price: 3800,
+//     ingredients: ["rice noodles", "tofu", "bean sprouts", "peanuts", "lime"],
+//     description: "Classic Thai noodles",
+//     prepTime: 14,
+//     category: "Vegan",
+//     image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400",
+//   },
+//   {
+//     id: 9,
+//     name: "Margherita Pizza",
+//     price: 5200,
+//     ingredients: ["pizza dough", "tomato sauce", "mozzarella", "basil"],
+//     description: "Classic Italian pizza",
+//     prepTime: 15,
+//     category: "Mains",
+//     image: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=400",
+//   },
+//   {
+//     id: 10,
+//     name: "Chocolate Lava Cake",
+//     price: 6500,
+//     ingredients: ["chocolate", "sugar", "butter", "eggs", "flour"],
+//     description: "Warm molten chocolate cake",
+//     prepTime: 12,
+//     category: "Desserts",
+//     image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400",
+//   },
+//   {
+//     id: 11,
+//     name: "Mango Sticky Rice",
+//     price: 3500,
+//     ingredients: ["glutinous rice", "mango", "coconut milk", "sugar"],
+//     description: "Thai dessert",
+//     prepTime: 10,
+//     category: "Desserts",
+//     image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400",
+//   },
+//   {
+//     id: 12,
+//     name: "Fresh Lemonade",
+//     price: 1500,
+//     ingredients: ["lemon", "sugar", "water", "mint"],
+//     description: "Hand-squeezed lemonade",
+//     prepTime: 3,
+//     category: "Beverages",
+//     image: "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400",
+//   },
+// ];
+
+// // ========== INGREDIENT RISK DATABASE ==========
+// // This maps each medical condition to ingredients that trigger it
+// const INGREDIENT_RISK_DATABASE = {
+//   "Peanut Allergy": {
+//     keywords: [
+//       "peanut",
+//       "peanut flour",
+//       "groundnut",
+//       "arachis",
+//       "peanut butter",
+//     ],
+//     severity: "high",
+//     message: "⚠️ CONTAINS PEANUTS - Severe allergic reaction possible",
+//     modification: "Substitute with sunflower seed butter",
+//     safeAlternative: "Sunflower Seed Butter",
+//   },
+//   "Tree Nut Allergy": {
+//     keywords: [
+//       "almond",
+//       "walnut",
+//       "cashew",
+//       "pistachio",
+//       "hazelnut",
+//       "coconut",
+//       "macadamia",
+//       "pecan",
+//     ],
+//     severity: "high",
+//     message: "⚠️ CONTAINS TREE NUTS - Potential anaphylaxis risk",
+//     modification: "Omit nuts or substitute with seeds",
+//     safeAlternative: "Pumpkin or sunflower seeds",
+//   },
+//   "Shellfish Allergy": {
+//     keywords: [
+//       "shrimp",
+//       "prawn",
+//       "crab",
+//       "lobster",
+//       "crayfish",
+//       "langoustine",
+//       "shellfish",
+//     ],
+//     severity: "high",
+//     message: "⚠️ CONTAINS SHELLFISH - Severe allergic reaction risk",
+//     modification: "Substitute with mushrooms or chicken",
+//     safeAlternative: "King oyster mushroom or chicken",
+//   },
+//   "Fish Allergy": {
+//     keywords: [
+//       "tilapia",
+//       "salmon",
+//       "tuna",
+//       "mackerel",
+//       "cod",
+//       "bass",
+//       "trout",
+//       "fish",
+//     ],
+//     severity: "high",
+//     message: "⚠️ CONTAINS FISH - Allergic reaction possible",
+//     modification: "Substitute with chicken or tofu",
+//     safeAlternative: "Grilled chicken or tofu",
+//   },
+//   "Milk Allergy": {
+//     keywords: [
+//       "milk",
+//       "cheese",
+//       "butter",
+//       "yogurt",
+//       "cream",
+//       "mozzarella",
+//       "dairy",
+//       "whey",
+//       "casein",
+//     ],
+//     severity: "high",
+//     message: "⚠️ CONTAINS DAIRY - Milk allergy risk",
+//     modification: "Use plant-based dairy alternatives",
+//     safeAlternative: "Oat milk, coconut milk, vegan cheese",
+//   },
+//   "Celiac Disease": {
+//     keywords: [
+//       "wheat",
+//       "flour",
+//       "gluten",
+//       "barley",
+//       "rye",
+//       "bread",
+//       "pita",
+//       "bun",
+//       "pasta",
+//       "dough",
+//     ],
+//     severity: "high",
+//     message: "⚠️ CONTAINS GLUTEN - Autoimmune reaction trigger",
+//     modification: "Use gluten-free alternatives",
+//     safeAlternative: "Gluten-free flour, rice flour, almond flour",
+//   },
+//   "Egg Allergy": {
+//     keywords: ["egg", "eggs", "mayonnaise", "albumin", "meringue"],
+//     severity: "moderate",
+//     message: "⚡ CONTAINS EGGS - Allergic reaction possible",
+//     modification: "Use egg replacer or omit",
+//     safeAlternative: "Flax egg or commercial egg replacer",
+//   },
+//   "Soy Allergy": {
+//     keywords: ["soy", "tofu", "soy sauce", "edamame", "miso", "tempeh"],
+//     severity: "moderate",
+//     message: "⚡ CONTAINS SOY - Potential allergen",
+//     modification: "Use coconut aminos instead of soy sauce",
+//     safeAlternative: "Coconut aminos, chickpea tofu",
+//   },
+//   "Wheat Allergy": {
+//     keywords: ["wheat", "flour", "bread", "pita", "bun", "pasta", "dough"],
+//     severity: "moderate",
+//     message: "⚡ CONTAINS WHEAT - Allergic reaction possible",
+//     modification: "Use gluten-free or wheat-free alternatives",
+//     safeAlternative: "Gluten-free flour, rice flour",
+//   },
+//   "Type 2 Diabetes": {
+//     keywords: [
+//       "sugar",
+//       "honey",
+//       "syrup",
+//       "cane sugar",
+//       "brown sugar",
+//       "molasses",
+//       "sweetener",
+//       "coconut sugar",
+//     ],
+//     severity: "moderate",
+//     message: "⚡ HIGH SUGAR - May spike blood glucose",
+//     modification: "Use sugar-free sweetener or reduce sugar",
+//     safeAlternative: "Monk fruit, stevia, erythritol",
+//   },
+//   "Type 1 Diabetes": {
+//     keywords: [
+//       "sugar",
+//       "honey",
+//       "syrup",
+//       "cane sugar",
+//       "brown sugar",
+//       "molasses",
+//     ],
+//     severity: "moderate",
+//     message: "⚡ CONTAINS SUGAR - Requires insulin adjustment",
+//     modification: "Request sugar-free version",
+//     safeAlternative: "Sugar-free sweetener",
+//   },
+//   Hypertension: {
+//     keywords: [
+//       "salt",
+//       "sodium",
+//       "soy sauce",
+//       "teriyaki",
+//       "fish sauce",
+//       "cured",
+//       "pickled",
+//       "broth",
+//     ],
+//     severity: "moderate",
+//     message: "⚡ HIGH SODIUM - May increase blood pressure",
+//     modification: "Request low-sodium preparation",
+//     safeAlternative: "Low-sodium version, herbs instead of salt",
+//   },
+//   "High Cholesterol": {
+//     keywords: [
+//       "butter",
+//       "palm oil",
+//       "coconut milk",
+//       "beef fat",
+//       "lard",
+//       "fried",
+//       "cheese",
+//       "cream",
+//     ],
+//     severity: "moderate",
+//     message: "⚡ HIGH SATURATED FAT - May affect cholesterol",
+//     modification: "Use heart-healthy oils (olive, avocado)",
+//     safeAlternative: "Olive oil, avocado oil",
+//   },
+//   Gout: {
+//     keywords: [
+//       "beef",
+//       "red meat",
+//       "organ meat",
+//       "sardines",
+//       "anchovies",
+//       "shellfish",
+//       "beef sirloin",
+//       "goat meat",
+//     ],
+//     severity: "moderate",
+//     message: "⚡ HIGH PURINE - May trigger gout flare",
+//     modification: "Choose poultry or plant protein instead",
+//     safeAlternative: "Chicken, turkey, tofu, beans",
+//   },
+//   "Kidney Disease": {
+//     keywords: [
+//       "salt",
+//       "sodium",
+//       "potassium",
+//       "phosphorus",
+//       "beans",
+//       "legumes",
+//       "dairy",
+//       "nuts",
+//     ],
+//     severity: "high",
+//     message: "⚠️ MAY STRESS KIDNEYS - Consult your doctor",
+//     modification: "Limited portion with medical approval",
+//     safeAlternative: "Consult healthcare provider",
+//   },
+//   "Lactose Intolerance": {
+//     keywords: [
+//       "milk",
+//       "cheese",
+//       "butter",
+//       "yogurt",
+//       "cream",
+//       "mozzarella",
+//       "dairy",
+//     ],
+//     severity: "low",
+//     message: "ℹ️ CONTAINS LACTOSE - May cause digestive discomfort",
+//     modification: "Use lactose-free or plant-based dairy",
+//     safeAlternative: "Lactose-free milk, vegan cheese",
+//   },
+//   GERD: {
+//     keywords: [
+//       "tomato",
+//       "citrus",
+//       "lemon",
+//       "lime",
+//       "spicy",
+//       "chili",
+//       "coffee",
+//       "chocolate",
+//       "mint",
+//       "onion",
+//       "garlic",
+//     ],
+//     severity: "low",
+//     message: "ℹ️ MAY TRIGGER REFLUX - Eat with caution",
+//     modification: "Request mild version without triggers",
+//     safeAlternative: "Mild herb seasoning",
+//   },
+//   Migraine: {
+//     keywords: [
+//       "caffeine",
+//       "coffee",
+//       "chocolate",
+//       "aged cheese",
+//       "red wine",
+//       "processed meat",
+//       "msg",
+//     ],
+//     severity: "low",
+//     message: "ℹ️ POTENTIAL MIGRAINE TRIGGER",
+//     modification: "Omit trigger ingredients",
+//     safeAlternative: "Caffeine-free, chocolate-free version",
+//   },
+// };
+
+// // ========== INGREDIENT ANALYSIS FUNCTION ==========
+// // This analyzes each ingredient against user's medical conditions
+// const analyzeDishForConditions = (item, userConditions) => {
+//   if (!userConditions || userConditions.length === 0) {
+//     return {
+//       overallStatus: "safe",
+//       overallColor: "green",
+//       overallIcon: "✅",
+//       overallMessage:
+//         "This dish appears safe based on standard dietary guidelines",
+//       recommendation: "Enjoy your meal! No medical conditions selected.",
+//       ingredientAnalysis: item.ingredients.map((ing) => ({
+//         ingredient: ing,
+//         status: "safe",
+//         statusIcon: "✅",
+//         message: "No conflicts detected with your profile",
+//         severity: "none",
+//         modificationAvailable: false,
+//         safeAlternative: null,
+//       })),
+//       canBeModified: false,
+//       highRiskCount: 0,
+//       moderateRiskCount: 0,
+//       lowRiskCount: 0,
+//     };
+//   }
+
+//   const ingredientAnalysis = [];
+//   let highRiskCount = 0;
+//   let moderateRiskCount = 0;
+//   let lowRiskCount = 0;
+//   let modificationsAvailable = [];
+
+//   for (const ingredient of item.ingredients) {
+//     let highestSeverity = "safe";
+//     let relevantCondition = null;
+//     let relevantMessage = "";
+//     let modification = null;
+//     let safeAlternative = null;
+
+//     // Check ingredient against each user condition
+//     for (const condition of userConditions) {
+//       const riskRule = INGREDIENT_RISK_DATABASE[condition];
+//       if (riskRule) {
+//         // Check if ingredient matches any keyword for this condition
+//         const matches = riskRule.keywords.some((keyword) =>
+//           ingredient.toLowerCase().includes(keyword.toLowerCase()),
+//         );
+
+//         if (matches) {
+//           // Track highest severity
+//           if (riskRule.severity === "high") {
+//             highestSeverity = "high";
+//             relevantCondition = condition;
+//             relevantMessage = riskRule.message;
+//             modification = riskRule.modification;
+//             safeAlternative = riskRule.safeAlternative;
+//           } else if (
+//             riskRule.severity === "moderate" &&
+//             highestSeverity !== "high"
+//           ) {
+//             highestSeverity = "moderate";
+//             relevantCondition = condition;
+//             relevantMessage = riskRule.message;
+//             modification = riskRule.modification;
+//             safeAlternative = riskRule.safeAlternative;
+//           } else if (
+//             riskRule.severity === "low" &&
+//             highestSeverity === "safe"
+//           ) {
+//             highestSeverity = "low";
+//             relevantCondition = condition;
+//             relevantMessage = riskRule.message;
+//             modification = riskRule.modification;
+//             safeAlternative = riskRule.safeAlternative;
+//           }
+//         }
+//       }
+//     }
+
+//     // Count risks by severity
+//     if (highestSeverity === "high") highRiskCount++;
+//     else if (highestSeverity === "moderate") moderateRiskCount++;
+//     else if (highestSeverity === "low") lowRiskCount++;
+
+//     // Build analysis for this ingredient
+//     let statusIcon, statusMessage, statusColor;
+//     switch (highestSeverity) {
+//       case "high":
+//         statusIcon = "🔴";
+//         statusColor = "red";
+//         statusMessage =
+//           relevantMessage ||
+//           `HIGH RISK: Contains ${ingredient} - Avoid for ${relevantCondition || "your condition"}`;
+//         break;
+//       case "moderate":
+//         statusIcon = "🟡";
+//         statusColor = "orange";
+//         statusMessage =
+//           relevantMessage ||
+//           `CAUTION: ${ingredient} - Limit intake for ${relevantCondition || "your condition"}`;
+//         break;
+//       case "low":
+//         statusIcon = "🟢";
+//         statusColor = "yellow";
+//         statusMessage =
+//           relevantMessage ||
+//           `LOW RISK: ${ingredient} - Generally acceptable but monitor symptoms`;
+//         break;
+//       default:
+//         statusIcon = "✅";
+//         statusColor = "green";
+//         statusMessage = `SAFE: ${ingredient} - No conflicts with your conditions`;
+//     }
+
+//     if (modification && !modificationsAvailable.includes(modification)) {
+//       modificationsAvailable.push(modification);
+//     }
+
+//     ingredientAnalysis.push({
+//       ingredient: ingredient,
+//       status: highestSeverity,
+//       statusIcon: statusIcon,
+//       statusColor: statusColor,
+//       message: statusMessage,
+//       relevantCondition: relevantCondition,
+//       modificationAvailable: modification !== null,
+//       modificationText: modification,
+//       safeAlternative: safeAlternative,
+//     });
+//   }
+
+//   // Determine overall dish status
+//   let overallStatus, overallColor, overallIcon, overallMessage, recommendation;
+
+//   if (highRiskCount > 0) {
+//     overallStatus = "high_risk";
+//     overallColor = "red";
+//     overallIcon = "🔴";
+//     overallMessage = `⚠️ HIGH RISK DISH - Contains ${highRiskCount} ingredient(s) that may be dangerous for your condition(s)`;
+//     recommendation =
+//       "STRONG RECOMMENDATION: Do NOT order this dish, or request significant modifications below";
+//   } else if (moderateRiskCount > 0) {
+//     overallStatus = "moderate_risk";
+//     overallColor = "orange";
+//     overallIcon = "🟡";
+//     overallMessage = `⚡ MODERATE RISK DISH - Contains ${moderateRiskCount} ingredient(s) that should be limited with your condition(s)`;
+//     recommendation =
+//       "RECOMMENDATION: Order with modifications or in small portions only";
+//   } else if (lowRiskCount > 0) {
+//     overallStatus = "low_risk";
+//     overallColor = "yellow";
+//     overallIcon = "🟢";
+//     overallMessage = `ℹ️ LOW RISK DISH - Contains ${lowRiskCount} ingredient(s) that may cause mild symptoms for some people`;
+//     recommendation = "Generally acceptable, but monitor for any reaction";
+//   } else {
+//     overallStatus = "safe";
+//     overallColor = "green";
+//     overallIcon = "✅";
+//     overallMessage =
+//       "✓ SAFE DISH - All ingredients appear compatible with your medical conditions";
+//     recommendation = "This dish is safe for you to enjoy!";
+//   }
+
+//   return {
+//     overallStatus: overallStatus,
+//     overallColor: overallColor,
+//     overallIcon: overallIcon,
+//     overallMessage: overallMessage,
+//     recommendation: recommendation,
+//     ingredientAnalysis: ingredientAnalysis,
+//     canBeModified: modificationsAvailable.length > 0,
+//     modificationsAvailable: modificationsAvailable,
+//     highRiskCount: highRiskCount,
+//     moderateRiskCount: moderateRiskCount,
+//     lowRiskCount: lowRiskCount,
+//   };
+// };
+
+// // ========== API SERVICE FOR ORDER STORAGE ==========
+// const ORDER_API_URL = "https://your-api-endpoint.com/api/orders";
+
+// const apiService = {
+//   sendOrderToAPI: async (orderData) => {
+//     const payload = {
+//       orderId: `ORD_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+//       tableNumber: orderData.tableNumber,
+//       customerName: orderData.customerName,
+//       userId: orderData.userId,
+//       orderType: orderData.orderType || "dine-in",
+//       items: orderData.items.map((item) => ({
+//         id: item.id,
+//         name: item.name,
+//         quantity: item.quantity,
+//         originalPrice: item.price,
+//         finalPrice: item.finalPrice,
+//         ingredients: item.ingredients,
+//         customizations: item.customizations || [],
+//         modifications: item.modifications || {},
+//         specialInstructions: item.specialInstructions || "",
+//         healthAnalysis: item.healthAnalysis || [],
+//         preparationTime: item.prepTime || 15,
+//       })),
+//       customizedPlates: orderData.customizedPlates || [],
+//       subtotal: orderData.subtotal,
+//       tax: orderData.tax || 0,
+//       total: orderData.total,
+//       medicalConditions: orderData.medicalConditions,
+//       timestamp: new Date().toISOString(),
+//       estimatedPreparationTime:
+//         orderData.items.reduce(
+//           (max, item) => Math.max(max, item.prepTime || 15),
+//           15,
+//         ) + 5,
+//       status: "confirmed",
+//       notes: orderData.notes || "",
+//     };
+
+//     try {
+//       const response = await axios.post(ORDER_API_URL, payload, {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Accept: "application/json",
+//         },
+//       });
+//       const storedOrders = JSON.parse(
+//         localStorage.getItem("order_history") || "[]",
+//       );
+//       storedOrders.push(payload);
+//       localStorage.setItem("order_history", JSON.stringify(storedOrders));
+//       return { success: true, data: response.data, orderId: payload.orderId };
+//     } catch (error) {
+//       console.error("API error, storing locally:", error);
+//       const fallbackOrders = JSON.parse(
+//         localStorage.getItem("fallback_orders") || "[]",
+//       );
+//       fallbackOrders.push({
+//         ...payload,
+//         fallbackTimestamp: new Date().toISOString(),
+//       });
+//       localStorage.setItem("fallback_orders", JSON.stringify(fallbackOrders));
+//       return {
+//         success: false,
+//         error: error.message,
+//         fallbackStored: true,
+//         orderId: payload.orderId,
+//       };
+//     }
+//   },
+
+//   getOrderStatus: async (orderId) => {
+//     try {
+//       const response = await axios.get(`${ORDER_API_URL}/${orderId}/status`);
+//       return response.data;
+//     } catch (error) {
+//       console.error("Status fetch error:", error);
+//       return null;
+//     }
+//   },
+
+//   getTableOrders: async (tableNumber) => {
+//     try {
+//       const response = await axios.get(
+//         `${ORDER_API_URL}?tableNumber=${tableNumber}`,
+//       );
+//       return response.data;
+//     } catch (error) {
+//       console.error("Failed to fetch table orders:", error);
+//       return [];
+//     }
+//   },
+// };
+
+// // ========== FLOATING TIMER COMPONENT ==========
+// const FloatingTimer = ({
+//   orderId,
+//   tableNumber,
+//   initialDuration,
+//   onExpire,
+//   onOpenModal,
+// }) => {
+//   const [timeLeft, setTimeLeft] = useState(initialDuration);
+//   const [isHovered, setIsHovered] = useState(false);
+
+//   useEffect(() => {
+//     const interval = setInterval(() => {
+//       setTimeLeft((prev) => {
+//         if (prev <= 1) {
+//           clearInterval(interval);
+//           onExpire && onExpire();
+//           return 0;
+//         }
+//         return prev - 1;
+//       });
+//     }, 1000);
+//     return () => clearInterval(interval);
+//   }, [onExpire]);
+
+//   const formatTime = (seconds) => {
+//     const mins = Math.floor(seconds / 60);
+//     const secs = seconds % 60;
+//     return `${mins}:${secs.toString().padStart(2, "0")}`;
+//   };
+
+//   const getTimerColor = () => {
+//     if (timeLeft <= 60) return "bg-red-500 animate-pulse";
+//     if (timeLeft <= 300) return "bg-orange-500";
+//     return "bg-green-500";
+//   };
+
+//   return (
+//     <motion.div
+//       initial={{ x: 100, opacity: 0 }}
+//       animate={{ x: 0, opacity: 1 }}
+//       exit={{ x: 100, opacity: 0 }}
+//       onMouseEnter={() => setIsHovered(true)}
+//       onMouseLeave={() => setIsHovered(false)}
+//       onClick={onOpenModal}
+//       className={`fixed bottom-4 right-4 z-50 cursor-pointer rounded-full shadow-2xl transition-all duration-300 ${isHovered ? "scale-105" : ""}`}
+//     >
+//       <div
+//         className={`${getTimerColor()} text-white px-4 py-3 rounded-full flex items-center gap-3`}
+//       >
+//         <TimerIcon className="animate-pulse" />
+//         <div className="flex flex-col">
+//           <span className="text-xs font-medium">
+//             Order #{orderId.slice(-6)} | Table {tableNumber}
+//           </span>
+//           <span className="text-xl font-mono font-bold tracking-wider">
+//             {formatTime(timeLeft)}
+//           </span>
+//         </div>
+//       </div>
+//     </motion.div>
+//   );
+// };
+
+// // ========== TABLE SELECTOR MODAL ==========
+// const TableSelectorModal = ({ isOpen, onClose, onConfirm }) => {
+//   const [tableNumber, setTableNumber] = useState("");
+//   const [customerName, setCustomerName] = useState("");
+
+//   if (!isOpen) return null;
+
+//   return (
+//     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+//       <div
+//         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+//         onClick={onClose}
+//       />
+//       <motion.div
+//         initial={{ scale: 0.9, opacity: 0 }}
+//         animate={{ scale: 1, opacity: 1 }}
+//         className="bg-white rounded-2xl shadow-2xl w-full max-w-md relative"
+//       >
+//         <div className="bg-gradient-to-r from-orange-600 to-red-600 p-4 rounded-t-2xl">
+//           <h2 className="text-white font-bold text-xl flex items-center gap-2">
+//             <RestaurantIcon /> Welcome to NutriScan·AI
+//           </h2>
+//           <p className="text-orange-100 text-sm">
+//             Please enter your table details
+//           </p>
+//         </div>
+//         <div className="p-6">
+//           <div className="mb-4">
+//             <label className="block text-sm font-medium text-gray-700 mb-2">
+//               Table Number
+//             </label>
+//             <input
+//               type="number"
+//               value={tableNumber}
+//               onChange={(e) => setTableNumber(e.target.value)}
+//               placeholder="Enter table number"
+//               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+//               autoFocus
+//             />
+//           </div>
+//           <div className="mb-4">
+//             <label className="block text-sm font-medium text-gray-700 mb-2">
+//               Your Name (Optional)
+//             </label>
+//             <input
+//               type="text"
+//               value={customerName}
+//               onChange={(e) => setCustomerName(e.target.value)}
+//               placeholder="Enter your name"
+//               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+//             />
+//           </div>
+//         </div>
+//         <div className="p-4 border-t flex gap-3">
+//           <button onClick={onClose} className="flex-1 border py-2 rounded-lg">
+//             Cancel
+//           </button>
+//           <button
+//             onClick={() => {
+//               if (tableNumber) onConfirm(tableNumber, customerName);
+//             }}
+//             className="flex-1 bg-orange-500 text-white py-2 rounded-lg font-semibold"
+//           >
+//             Start Ordering
+//           </button>
+//         </div>
+//       </motion.div>
+//     </div>
+//   );
+// };
+
+// // ========== CONDITION SELECTION MODAL ==========
+// const ConditionModal = ({ isOpen, onClose, onSelect, selected }) => {
+//   const [localSelected, setLocalSelected] = useState(selected);
+
+//   useEffect(() => {
+//     if (isOpen) setLocalSelected(selected);
+//   }, [isOpen, selected]);
+
+//   const toggle = (cond) => {
+//     setLocalSelected((prev) =>
+//       prev.includes(cond) ? prev.filter((c) => c !== cond) : [...prev, cond],
+//     );
+//   };
+
+//   if (!isOpen) return null;
+
+//   return (
+//     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+//       <div
+//         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+//         onClick={onClose}
+//       />
+//       <motion.div
+//         initial={{ scale: 0.9, opacity: 0 }}
+//         animate={{ scale: 1, opacity: 1 }}
+//         className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col relative"
+//       >
+//         <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-4 rounded-t-2xl">
+//           <h2 className="text-white font-bold text-xl flex items-center gap-2">
+//             <HealthIcon /> Your Medical Conditions
+//           </h2>
+//           <p className="text-purple-200 text-sm">
+//             Select all that apply for personalized ingredient analysis
+//           </p>
+//         </div>
+//         <div className="flex-1 overflow-y-auto p-4">
+//           <div className="grid grid-cols-2 gap-2">
+//             {MEDICAL_CONDITIONS.map((cond) => (
+//               <button
+//                 key={cond.id}
+//                 onClick={() => toggle(cond.name)}
+//                 className={`p-2 rounded-lg text-left text-sm transition ${
+//                   localSelected.includes(cond.name)
+//                     ? "bg-purple-100 border-2 border-purple-500 text-purple-800"
+//                     : "bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100"
+//                 }`}
+//               >
+//                 <div className="font-medium">{cond.name}</div>
+//                 <div className="text-xs opacity-70">{cond.category}</div>
+//               </button>
+//             ))}
+//           </div>
+//         </div>
+//         <div className="p-4 border-t flex gap-3">
+//           <button onClick={onClose} className="flex-1 border py-2 rounded-lg">
+//             Skip
+//           </button>
+//           <button
+//             onClick={() => {
+//               onSelect(localSelected);
+//               onClose();
+//             }}
+//             className="flex-1 bg-purple-600 text-white py-2 rounded-lg font-semibold"
+//           >
+//             Apply ({localSelected.length})
+//           </button>
+//         </div>
+//       </motion.div>
+//     </div>
+//   );
+// };
+
+// // ========== INGREDIENT ANALYSIS MODAL ==========
+// const AnalysisModal = ({
+//   isOpen,
+//   onClose,
+//   analysis,
+//   isLoading,
+//   onContinue,
+//   item,
+//   userConditions,
+// }) => {
+//   const [expandedIngredient, setExpandedIngredient] = useState(null);
+
+//   if (!isOpen) return null;
+
+//   const getHeaderColor = () => {
+//     if (analysis?.overallColor === "red") return "from-red-600 to-red-700";
+//     if (analysis?.overallColor === "orange")
+//       return "from-orange-500 to-orange-600";
+//     if (analysis?.overallColor === "yellow")
+//       return "from-yellow-500 to-amber-500";
+//     return "from-emerald-600 to-green-600";
+//   };
+
+//   const getBorderColor = (statusColor) => {
+//     switch (statusColor) {
+//       case "red":
+//         return "border-red-500 bg-red-50";
+//       case "orange":
+//         return "border-orange-500 bg-orange-50";
+//       case "yellow":
+//         return "border-yellow-500 bg-yellow-50";
+//       default:
+//         return "border-green-500 bg-green-50";
+//     }
+//   };
+
+//   return (
+//     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+//       <div
+//         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+//         onClick={onClose}
+//       />
+//       <motion.div
+//         initial={{ scale: 0.9, opacity: 0 }}
+//         animate={{ scale: 1, opacity: 1 }}
+//         className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] flex flex-col relative"
+//       >
+//         <div
+//           className={`bg-gradient-to-r ${getHeaderColor()} p-4 rounded-t-2xl text-white`}
+//         >
+//           <div className="flex items-center justify-between">
+//             <div className="flex items-center gap-2">
+//               <ScienceIcon />
+//               <h2 className="font-bold text-xl">Ingredient Safety Analysis</h2>
+//             </div>
+//             <span className="text-2xl">{analysis?.overallIcon}</span>
+//           </div>
+//           <p className="text-white/80 text-sm mt-1">{item?.name}</p>
+//         </div>
+
+//         <div className="flex-1 overflow-y-auto p-4">
+//           {isLoading ? (
+//             <div className="text-center py-8">
+//               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500 mx-auto mb-4" />
+//               <p className="text-gray-600">
+//                 Analyzing ingredients against your conditions...
+//               </p>
+//             </div>
+//           ) : analysis ? (
+//             <>
+//               {/* Overall Status Banner */}
+//               <div
+//                 className={`rounded-xl p-4 mb-4 border-l-4 ${getBorderColor(analysis.overallColor)}`}
+//               >
+//                 <div className="flex items-start gap-3">
+//                   <span className="text-2xl">{analysis.overallIcon}</span>
+//                   <div className="flex-1">
+//                     <p className="font-semibold text-gray-800">
+//                       {analysis.overallMessage}
+//                     </p>
+//                     <p className="text-sm text-gray-600 mt-1">
+//                       {analysis.recommendation}
+//                     </p>
+//                     {(analysis.highRiskCount > 0 ||
+//                       analysis.moderateRiskCount > 0) && (
+//                       <div className="flex gap-3 mt-2 text-xs">
+//                         {analysis.highRiskCount > 0 && (
+//                           <span className="text-red-600">
+//                             🔴 {analysis.highRiskCount} high risk
+//                           </span>
+//                         )}
+//                         {analysis.moderateRiskCount > 0 && (
+//                           <span className="text-orange-600">
+//                             🟡 {analysis.moderateRiskCount} moderate risk
+//                           </span>
+//                         )}
+//                         {analysis.lowRiskCount > 0 && (
+//                           <span className="text-yellow-600">
+//                             🟢 {analysis.lowRiskCount} low risk
+//                           </span>
+//                         )}
+//                       </div>
+//                     )}
+//                   </div>
+//                 </div>
+//               </div>
+
+//               {/* Ingredient Analysis List */}
+//               <h3 className="font-semibold text-gray-700 mb-3">
+//                 📋 Ingredient Analysis
+//               </h3>
+//               <div className="space-y-3">
+//                 {analysis.ingredientAnalysis.map((ing, idx) => (
+//                   <div key={idx} className="border rounded-xl overflow-hidden">
+//                     <button
+//                       onClick={() =>
+//                         setExpandedIngredient(
+//                           expandedIngredient === idx ? null : idx,
+//                         )
+//                       }
+//                       className="w-full p-3 flex items-center justify-between hover:bg-gray-50 transition"
+//                     >
+//                       <div className="flex items-center gap-3">
+//                         <span className="text-xl">{ing.statusIcon}</span>
+//                         <span className="font-medium text-gray-800">
+//                           {ing.ingredient}
+//                         </span>
+//                       </div>
+//                       <div className="flex items-center gap-2">
+//                         <span
+//                           className={`text-xs px-2 py-1 rounded-full ${
+//                             ing.status === "high"
+//                               ? "bg-red-100 text-red-700"
+//                               : ing.status === "moderate"
+//                                 ? "bg-orange-100 text-orange-700"
+//                                 : ing.status === "low"
+//                                   ? "bg-yellow-100 text-yellow-700"
+//                                   : "bg-green-100 text-green-700"
+//                           }`}
+//                         >
+//                           {ing.status === "high"
+//                             ? "HIGH RISK"
+//                             : ing.status === "moderate"
+//                               ? "CAUTION"
+//                               : ing.status === "low"
+//                                 ? "LOW RISK"
+//                                 : "SAFE"}
+//                         </span>
+//                         <span className="text-gray-400">
+//                           {expandedIngredient === idx ? "▲" : "▼"}
+//                         </span>
+//                       </div>
+//                     </button>
+
+//                     {expandedIngredient === idx && (
+//                       <div className="p-3 bg-gray-50 border-t">
+//                         <p className="text-sm text-gray-700 mb-2">
+//                           {ing.message}
+//                         </p>
+//                         {ing.relevantCondition && (
+//                           <p className="text-xs text-gray-500">
+//                             ⚠️ Relevant condition: {ing.relevantCondition}
+//                           </p>
+//                         )}
+//                         {ing.modificationAvailable && (
+//                           <div className="mt-2 p-2 bg-emerald-50 rounded-lg">
+//                             <p className="text-xs font-medium text-emerald-700">
+//                               ✓ Modification Available:
+//                             </p>
+//                             <p className="text-xs text-emerald-600">
+//                               {ing.modificationText}
+//                             </p>
+//                             {ing.safeAlternative && (
+//                               <p className="text-xs text-emerald-600 mt-1">
+//                                 Suggested: {ing.safeAlternative}
+//                               </p>
+//                             )}
+//                           </div>
+//                         )}
+//                       </div>
+//                     )}
+//                   </div>
+//                 ))}
+//               </div>
+
+//               {/* Modification Summary */}
+//               {analysis.modificationsAvailable &&
+//                 analysis.modificationsAvailable.length > 0 && (
+//                   <div className="mt-4 p-3 bg-blue-50 rounded-xl">
+//                     <p className="text-sm font-medium text-blue-700 mb-1">
+//                       ✨ Customization Options Available
+//                     </p>
+//                     <ul className="text-xs text-blue-600 space-y-1">
+//                       {analysis.modificationsAvailable
+//                         .slice(0, 3)
+//                         .map((mod, idx) => (
+//                           <li key={idx}>• {mod}</li>
+//                         ))}
+//                     </ul>
+//                   </div>
+//                 )}
+//             </>
+//           ) : (
+//             <div className="text-center py-8">
+//               <CheckIcon className="text-green-500 text-5xl mx-auto mb-3" />
+//               <p className="text-green-700 font-medium">✓ No analysis needed</p>
+//               <p className="text-xs text-gray-500">
+//                 Select medical conditions first for personalized analysis
+//               </p>
+//             </div>
+//           )}
+//         </div>
+
+//         <div className="p-4 border-t flex gap-3">
+//           <button onClick={onClose} className="flex-1 border py-2 rounded-lg">
+//             Close
+//           </button>
+//           <button
+//             onClick={onContinue}
+//             className="flex-1 bg-emerald-600 text-white py-2 rounded-lg font-semibold hover:bg-emerald-700 transition"
+//             disabled={analysis?.overallStatus === "high_risk"}
+//           >
+//             {analysis?.overallStatus === "high_risk"
+//               ? "⚠️ Not Recommended"
+//               : "Continue to Order"}
+//           </button>
+//         </div>
+//       </motion.div>
+//     </div>
+//   );
+// };
+
+// // ========== CUSTOMIZATION MODAL ==========
+// const CustomizationModal = ({
+//   isOpen,
+//   onClose,
+//   item,
+//   selectedConditions,
+//   onAddToCart,
+//   analysis,
+// }) => {
+//   const [customizations, setCustomizations] = useState([]);
+//   const [specialInstructions, setSpecialInstructions] = useState("");
+//   const [showModifications, setShowModifications] = useState(false);
+//   const [selectedModifications, setSelectedModifications] = useState({});
+
+//   if (!isOpen) return null;
+
+//   // Get ingredients that need modification based on analysis
+//   const riskyIngredients =
+//     analysis?.ingredientAnalysis?.filter(
+//       (ing) => ing.status !== "safe" && ing.modificationAvailable,
+//     ) || [];
+
+//   const handleApplyModification = (ingredient, modification) => {
+//     setSelectedModifications((prev) => ({
+//       ...prev,
+//       [ingredient]: modification,
+//     }));
+//     setCustomizations((prev) => {
+//       const filtered = prev.filter((c) => !c.includes(ingredient));
+//       return [...filtered, `Replace ${ingredient} - ${modification}`];
+//     });
+//     toast.success(`✓ Modification applied for ${ingredient}`);
+//   };
+
+//   return (
+//     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+//       <div
+//         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+//         onClick={onClose}
+//       />
+//       <motion.div
+//         initial={{ scale: 0.9, opacity: 0 }}
+//         animate={{ scale: 1, opacity: 1 }}
+//         className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[85vh] flex flex-col relative"
+//       >
+//         <div className="bg-gradient-to-r from-amber-600 to-orange-600 p-4 rounded-t-2xl">
+//           <h2 className="text-white font-bold text-xl flex items-center gap-2">
+//             <EditIcon /> Customize Your Order
+//           </h2>
+//           <p className="text-amber-100 text-sm">
+//             {item.name} - RWF {item.price.toLocaleString()}
+//           </p>
+//         </div>
+
+//         <div className="flex-1 overflow-y-auto p-4">
+//           {/* Original Ingredients */}
+//           <div className="mb-4">
+//             <h3 className="font-semibold text-gray-700 mb-2">
+//               📦 Original Ingredients:
+//             </h3>
+//             <div className="flex flex-wrap gap-1">
+//               {item.ingredients.map((ing, idx) => {
+//                 const isRisky = riskyIngredients.some(
+//                   (r) => r.ingredient === ing,
+//                 );
+//                 return (
+//                   <span
+//                     key={idx}
+//                     className={`text-xs px-2 py-1 rounded-full ${
+//                       isRisky
+//                         ? "bg-red-100 text-red-700"
+//                         : "bg-gray-100 text-gray-700"
+//                     }`}
+//                   >
+//                     {ing} {isRisky && "⚠️"}
+//                   </span>
+//                 );
+//               })}
+//             </div>
+//           </div>
+
+//           {/* Health-Safe Modifications */}
+//           {riskyIngredients.length > 0 && (
+//             <div className="mb-4">
+//               <button
+//                 onClick={() => setShowModifications(!showModifications)}
+//                 className="w-full text-left bg-emerald-50 p-3 rounded-xl border border-emerald-200"
+//               >
+//                 <div className="flex items-center gap-2">
+//                   <ShieldIcon className="text-emerald-600" />
+//                   <span className="font-semibold text-emerald-800">
+//                     Health-Safe Modifications Available
+//                   </span>
+//                 </div>
+//                 <p className="text-xs text-emerald-600 mt-1">
+//                   {riskyIngredients.length} ingredient(s) can be modified for
+//                   your safety
+//                 </p>
+//               </button>
+
+//               {showModifications && (
+//                 <div className="mt-2 space-y-2">
+//                   {riskyIngredients.map((ing, idx) => (
+//                     <div key={idx} className="bg-green-50 p-3 rounded-lg">
+//                       <div className="flex items-start gap-2">
+//                         <span className="text-xl">{ing.statusIcon}</span>
+//                         <div className="flex-1">
+//                           <p className="text-sm font-medium text-gray-800">
+//                             {ing.ingredient}
+//                           </p>
+//                           <p className="text-xs text-gray-600">{ing.message}</p>
+//                           {ing.modificationText && (
+//                             <div className="mt-2">
+//                               <p className="text-xs font-medium text-emerald-700">
+//                                 Suggested modification:
+//                               </p>
+//                               <p className="text-xs text-emerald-600">
+//                                 {ing.modificationText}
+//                               </p>
+//                               {ing.safeAlternative && (
+//                                 <p className="text-xs text-emerald-600">
+//                                   → {ing.safeAlternative}
+//                                 </p>
+//                               )}
+//                             </div>
+//                           )}
+//                         </div>
+//                         <button
+//                           onClick={() =>
+//                             handleApplyModification(
+//                               ing.ingredient,
+//                               ing.modificationText,
+//                             )
+//                           }
+//                           className="bg-emerald-500 text-white px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap"
+//                           disabled={selectedModifications[ing.ingredient]}
+//                         >
+//                           {selectedModifications[ing.ingredient]
+//                             ? "✓ Applied"
+//                             : "Apply"}
+//                         </button>
+//                       </div>
+//                     </div>
+//                   ))}
+//                 </div>
+//               )}
+//             </div>
+//           )}
+
+//           {/* Applied Customizations */}
+//           {customizations.length > 0 && (
+//             <div className="mb-4">
+//               <h3 className="font-semibold text-gray-700 mb-2">
+//                 ✓ Applied Customizations:
+//               </h3>
+//               {customizations.map((cust, idx) => (
+//                 <div
+//                   key={idx}
+//                   className="bg-gray-100 p-2 rounded-lg text-sm mb-1 flex justify-between"
+//                 >
+//                   <span>{cust}</span>
+//                   <button
+//                     onClick={() =>
+//                       setCustomizations((prev) =>
+//                         prev.filter((_, i) => i !== idx),
+//                       )
+//                     }
+//                     className="text-red-500"
+//                   >
+//                     ✕
+//                   </button>
+//                 </div>
+//               ))}
+//             </div>
+//           )}
+
+//           {/* Special Instructions */}
+//           <div className="mb-4">
+//             <h3 className="font-semibold text-gray-700 mb-2">
+//               📝 Special Instructions:
+//             </h3>
+//             <textarea
+//               value={specialInstructions}
+//               onChange={(e) => setSpecialInstructions(e.target.value)}
+//               placeholder="Any additional requests? (e.g., no salt, extra well-done, etc.)"
+//               className="w-full p-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+//               rows="2"
+//             />
+//           </div>
+//         </div>
+
+//         <div className="p-4 border-t flex gap-3">
+//           <button onClick={onClose} className="flex-1 border py-2 rounded-lg">
+//             Cancel
+//           </button>
+//           <button
+//             onClick={() => {
+//               onAddToCart(item, customizations, specialInstructions);
+//               onClose();
+//             }}
+//             className="flex-1 bg-orange-500 text-white py-2 rounded-lg font-semibold"
+//           >
+//             Add to Cart (RWF {item.price.toLocaleString()})
+//           </button>
+//         </div>
+//       </motion.div>
+//     </div>
+//   );
+// };
+
+// // ========== CART MODAL ==========
+// const CartModal = ({
+//   isOpen,
+//   onClose,
+//   cart,
+//   updateQuantity,
+//   removeItem,
+//   getTotal,
+//   onCheckout,
+//   tableInfo,
+// }) => {
+//   if (!isOpen) return null;
+
+//   return (
+//     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+//       <div
+//         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+//         onClick={onClose}
+//       />
+//       <motion.div
+//         initial={{ scale: 0.9, opacity: 0 }}
+//         animate={{ scale: 1, opacity: 1 }}
+//         className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col relative"
+//       >
+//         <div className="bg-orange-500 p-4 rounded-t-2xl flex justify-between items-center">
+//           <h2 className="text-white font-bold text-xl flex items-center gap-2">
+//             <CartIcon /> Your Order
+//           </h2>
+//           <button
+//             onClick={onClose}
+//             className="p-1 hover:bg-white/20 rounded-full"
+//           >
+//             <CloseIcon className="text-white" />
+//           </button>
+//         </div>
+
+//         <div className="flex-1 overflow-y-auto p-4">
+//           {cart.length === 0 ? (
+//             <div className="text-center py-12">
+//               <CartIcon className="text-gray-300 text-6xl mx-auto mb-4" />
+//               <p className="text-gray-500">Your cart is empty</p>
+//             </div>
+//           ) : (
+//             cart.map((item) => (
+//               <div key={item.cartId} className="mb-3 pb-3 border-b">
+//                 <div className="flex justify-between">
+//                   <div>
+//                     <h3 className="font-semibold">{item.name}</h3>
+//                     {item.customizations && item.customizations.length > 0 && (
+//                       <div className="text-xs text-gray-500 mt-1">
+//                         {item.customizations.map((c, i) => (
+//                           <div key={i}>• {c}</div>
+//                         ))}
+//                       </div>
+//                     )}
+//                     {item.specialInstructions && (
+//                       <p className="text-xs text-orange-600 mt-1">
+//                         📝 {item.specialInstructions}
+//                       </p>
+//                     )}
+//                   </div>
+//                   <p className="text-orange-600 font-bold">
+//                     RWF {item.finalPrice.toLocaleString()}
+//                   </p>
+//                 </div>
+//                 <div className="flex items-center gap-2 mt-2">
+//                   <button
+//                     onClick={() =>
+//                       updateQuantity(item.cartId, item.quantity - 1)
+//                     }
+//                     className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center"
+//                   >
+//                     <RemoveIcon fontSize="small" />
+//                   </button>
+//                   <span className="w-8 text-center">{item.quantity}</span>
+//                   <button
+//                     onClick={() =>
+//                       updateQuantity(item.cartId, item.quantity + 1)
+//                     }
+//                     className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center"
+//                   >
+//                     <AddIcon fontSize="small" />
+//                   </button>
+//                   <button
+//                     onClick={() => removeItem(item.cartId)}
+//                     className="ml-2 text-red-500"
+//                   >
+//                     <DeleteIcon fontSize="small" />
+//                   </button>
+//                 </div>
+//               </div>
+//             ))
+//           )}
+//         </div>
+
+//         {cart.length > 0 && (
+//           <div className="p-4 border-t">
+//             <div className="flex justify-between font-bold mb-3">
+//               <span>Total</span>
+//               <span className="text-orange-600">
+//                 RWF {getTotal().toLocaleString()}
+//               </span>
+//             </div>
+//             <button
+//               onClick={onCheckout}
+//               className="w-full bg-orange-500 text-white py-3 rounded-xl font-semibold hover:bg-orange-600 transition"
+//             >
+//               Confirm Order - Table {tableInfo.tableNumber}
+//             </button>
+//           </div>
+//         )}
+//       </motion.div>
+//     </div>
+//   );
+// };
+
+// // ========== ORDER DETAIL MODAL ==========
+// const OrderDetailModal = ({ isOpen, onClose, order }) => {
+//   if (!isOpen || !order) return null;
+
+//   return (
+//     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+//       <div
+//         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+//         onClick={onClose}
+//       />
+//       <motion.div
+//         initial={{ scale: 0.9, opacity: 0 }}
+//         animate={{ scale: 1, opacity: 1 }}
+//         className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col relative"
+//       >
+//         <div className="bg-gradient-to-r from-blue-600 to-cyan-600 p-4 rounded-t-2xl flex justify-between items-center">
+//           <h2 className="text-white font-bold text-xl">Order Details</h2>
+//           <button
+//             onClick={onClose}
+//             className="p-1 hover:bg-white/20 rounded-full"
+//           >
+//             <CloseIcon className="text-white" />
+//           </button>
+//         </div>
+//         <div className="flex-1 overflow-y-auto p-4">
+//           <div className="mb-4 p-3 bg-gray-50 rounded-xl">
+//             <p>
+//               <strong>Order ID:</strong> {order.orderId}
+//             </p>
+//             <p>
+//               <strong>Table:</strong> {order.tableNumber}
+//             </p>
+//             <p>
+//               <strong>Customer:</strong> {order.customerName || "Guest"}
+//             </p>
+//             <p>
+//               <strong>Status:</strong>{" "}
+//               <span className="text-green-600 font-semibold">
+//                 {order.status}
+//               </span>
+//             </p>
+//             <p>
+//               <strong>Time Remaining:</strong>{" "}
+//               {Math.floor(order.timeRemaining / 60)}:
+//               {(order.timeRemaining % 60).toString().padStart(2, "0")}
+//             </p>
+//           </div>
+//           <h3 className="font-bold mb-2">Items:</h3>
+//           {order.items.map((item, idx) => (
+//             <div key={idx} className="py-2 border-b">
+//               <div className="flex justify-between">
+//                 <span>
+//                   {item.quantity}x {item.name}
+//                 </span>
+//                 <span>RWF {item.finalPrice.toLocaleString()}</span>
+//               </div>
+//               {item.customizations && item.customizations.length > 0 && (
+//                 <div className="text-xs text-gray-500 mt-1">
+//                   {item.customizations.map((c, i) => (
+//                     <div key={i}>• {c}</div>
+//                   ))}
+//                 </div>
+//               )}
+//               {item.specialInstructions && (
+//                 <p className="text-xs text-orange-600 mt-1">
+//                   Note: {item.specialInstructions}
+//                 </p>
+//               )}
+//             </div>
+//           ))}
+//           <div className="flex justify-between font-bold pt-3 mt-2 border-t">
+//             <span>Total</span>
+//             <span className="text-orange-600">
+//               RWF {order.total.toLocaleString()}
+//             </span>
+//           </div>
+//         </div>
+//         <div className="p-4 border-t">
+//           <button
+//             onClick={onClose}
+//             className="w-full bg-gray-500 text-white py-2 rounded-lg"
+//           >
+//             Close
+//           </button>
+//         </div>
+//       </motion.div>
+//     </div>
+//   );
+// };
+
+// // ========== RESULT MODAL ==========
+// const ResultModal = ({ isOpen, onClose, type, title, message }) => {
+//   if (!isOpen) return null;
+
+//   return (
+//     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+//       <div
+//         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+//         onClick={onClose}
+//       />
+//       <motion.div
+//         initial={{ scale: 0.9, opacity: 0 }}
+//         animate={{ scale: 1, opacity: 1 }}
+//         className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center"
+//       >
+//         {type === "success" && (
+//           <CheckCircleIcon className="text-green-500 text-6xl mx-auto mb-4" />
+//         )}
+//         {type === "error" && (
+//           <ErrorIcon className="text-red-500 text-6xl mx-auto mb-4" />
+//         )}
+//         <h2 className="text-2xl font-bold mb-2">{title}</h2>
+//         <p className="text-gray-600 whitespace-pre-line mb-6">{message}</p>
+//         <button
+//           onClick={onClose}
+//           className="w-full bg-orange-500 text-white py-2 rounded-lg font-semibold"
+//         >
+//           OK
+//         </button>
+//       </motion.div>
+//     </div>
+//   );
+// };
+
+// // ========== MAIN MENU COMPONENT ==========
+// export const Menu = () => {
+//   const [cart, setCart] = useState([]);
+//   const [cartIdCounter, setCartIdCounter] = useState(1);
+//   const [showCart, setShowCart] = useState(false);
+//   const [showTableModal, setShowTableModal] = useState(true);
+//   const [showConditionModal, setShowConditionModal] = useState(false);
+//   const [showAnalysisModal, setShowAnalysisModal] = useState(false);
+//   const [showCustomModal, setShowCustomModal] = useState(false);
+//   const [selectedConditions, setSelectedConditions] = useState([]);
+//   const [analysisResult, setAnalysisResult] = useState(null);
+//   const [isAnalyzing, setIsAnalyzing] = useState(false);
+//   const [currentItem, setCurrentItem] = useState(null);
+//   const [activeCategory, setActiveCategory] = useState("all");
+//   const [search, setSearch] = useState("");
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [activeOrder, setActiveOrder] = useState(null);
+//   const [showOrderDetail, setShowOrderDetail] = useState(false);
+//   const [showResult, setShowResult] = useState({
+//     open: false,
+//     type: "",
+//     title: "",
+//     message: "",
+//   });
+//   const [tableInfo, setTableInfo] = useState({
+//     tableNumber: null,
+//     customerName: "",
+//   });
+
+//   const categories = ["all", ...new Set(MENU_ITEMS.map((i) => i.category))];
+//   const filtered = MENU_ITEMS.filter(
+//     (i) =>
+//       (activeCategory === "all" || i.category === activeCategory) &&
+//       i.name.toLowerCase().includes(search.toLowerCase()),
+//   );
+//   const itemsPerPage = 8;
+//   const totalPages = Math.ceil(filtered.length / itemsPerPage);
+//   const paginated = filtered.slice(
+//     (currentPage - 1) * itemsPerPage,
+//     currentPage * itemsPerPage,
+//   );
+
+//   useEffect(() => setCurrentPage(1), [activeCategory, search]);
+
+//   // Handle item click - perform ingredient analysis
+//   const handleItemClick = async (item) => {
+//     setCurrentItem(item);
+//     setIsAnalyzing(true);
+//     setShowAnalysisModal(true);
+
+//     // Analyze ingredients against user's medical conditions
+//     const analysis = analyzeDishForConditions(item, selectedConditions);
+//     setAnalysisResult(analysis);
+//     setIsAnalyzing(false);
+//   };
+
+//   const handleAnalysisContinue = () => {
+//     setShowAnalysisModal(false);
+//     setShowCustomModal(true);
+//   };
+
+//   const addToCartWithCustomizations = (item, customizations, instructions) => {
+//     const newItem = {
+//       ...item,
+//       quantity: 1,
+//       finalPrice: item.price,
+//       customizations: customizations,
+//       specialInstructions: instructions,
+//       healthAnalysis: analysisResult,
+//       cartId: cartIdCounter,
+//     };
+//     setCart((prev) => [...prev, newItem]);
+//     setCartIdCounter((prev) => prev + 1);
+//     toast.success(`${item.name} added to cart!`);
+//     setShowCart(true);
+//   };
+
+//   const updateQuantity = (cartId, newQty) => {
+//     if (newQty < 1) {
+//       setCart((prev) => prev.filter((i) => i.cartId !== cartId));
+//       return;
+//     }
+//     setCart((prev) =>
+//       prev.map((i) =>
+//         i.cartId === cartId
+//           ? { ...i, quantity: newQty, finalPrice: i.price * newQty }
+//           : i,
+//       ),
+//     );
+//   };
+
+//   const removeItem = (cartId) =>
+//     setCart((prev) => prev.filter((i) => i.cartId !== cartId));
+//   const getTotal = () => cart.reduce((sum, i) => sum + i.finalPrice, 0);
+
+//   const handleCheckout = async () => {
+//     if (cart.length === 0) {
+//       setShowResult({
+//         open: true,
+//         type: "error",
+//         title: "Cart Empty",
+//         message: "Please add items to your cart first.",
+//       });
+//       return;
+//     }
+
+//     setShowCart(false);
+
+//     const orderData = {
+//       tableNumber: tableInfo.tableNumber,
+//       customerName: tableInfo.customerName,
+//       userId: `user_${Date.now()}`,
+//       items: cart,
+//       customizedPlates: cart.map((item) => ({
+//         name: item.name,
+//         customizations: item.customizations,
+//         instructions: item.specialInstructions,
+//       })),
+//       subtotal: getTotal(),
+//       total: getTotal(),
+//       medicalConditions: selectedConditions,
+//       notes: `Table ${tableInfo.tableNumber} - ${tableInfo.customerName || "Guest"}`,
+//     };
+
+//     const result = await apiService.sendOrderToAPI(orderData);
+
+//     if (result.success || result.fallbackStored) {
+//       const preparationTime =
+//         cart.reduce((max, item) => Math.max(max, item.prepTime || 15), 15) + 5;
+
+//       setActiveOrder({
+//         orderId: result.orderId,
+//         tableNumber: tableInfo.tableNumber,
+//         customerName: tableInfo.customerName,
+//         items: cart,
+//         total: getTotal(),
+//         timeRemaining: preparationTime * 60,
+//         status: "confirmed",
+//       });
+
+//       setShowResult({
+//         open: true,
+//         type: "success",
+//         title: "✅ Order Confirmed!",
+//         message: `Table ${tableInfo.tableNumber} - Order placed!\nOrder ID: ${result.orderId.slice(-8)}\nTotal: RWF ${getTotal().toLocaleString()}\nEst. time: ${preparationTime} min`,
+//       });
+
+//       setCart([]);
+//     } else {
+//       setShowResult({
+//         open: true,
+//         type: "error",
+//         title: "Order Failed",
+//         message: "Unable to place order. Please try again.",
+//       });
+//     }
+//   };
+
+//   const handleTimerExpire = () => {
+//     toast.info(`Table ${tableInfo.tableNumber} - Your order is ready!`);
+//     setActiveOrder((prev) => (prev ? { ...prev, status: "ready" } : null));
+//   };
+
+//   const handleTableConfirm = (tableNum, customerName) => {
+//     setTableInfo({ tableNumber: tableNum, customerName: customerName || "" });
+//     setShowTableModal(false);
+//     toast.success(
+//       `Welcome Table ${tableNum}! ${customerName ? `Hello ${customerName}, ` : ""}Browse our menu.`,
+//     );
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
+//       <ToastContainer position="bottom-right" />
+
+//       <TableSelectorModal
+//         isOpen={showTableModal}
+//         onClose={() => {}}
+//         onConfirm={handleTableConfirm}
+//       />
+
+//       <ConditionModal
+//         isOpen={showConditionModal}
+//         onClose={() => setShowConditionModal(false)}
+//         onSelect={setSelectedConditions}
+//         selected={selectedConditions}
+//       />
+
+//       <AnalysisModal
+//         isOpen={showAnalysisModal}
+//         onClose={() => setShowAnalysisModal(false)}
+//         analysis={analysisResult}
+//         isLoading={isAnalyzing}
+//         onContinue={handleAnalysisContinue}
+//         item={currentItem}
+//         userConditions={selectedConditions}
+//       />
+
+//       <CustomizationModal
+//         isOpen={showCustomModal}
+//         onClose={() => setShowCustomModal(false)}
+//         item={currentItem}
+//         selectedConditions={selectedConditions}
+//         onAddToCart={addToCartWithCustomizations}
+//         analysis={analysisResult}
+//       />
+
+//       <CartModal
+//         isOpen={showCart}
+//         onClose={() => setShowCart(false)}
+//         cart={cart}
+//         updateQuantity={updateQuantity}
+//         removeItem={removeItem}
+//         getTotal={getTotal}
+//         onCheckout={handleCheckout}
+//         tableInfo={tableInfo}
+//       />
+
+//       <OrderDetailModal
+//         isOpen={showOrderDetail}
+//         onClose={() => setShowOrderDetail(false)}
+//         order={activeOrder}
+//       />
+
+//       <ResultModal
+//         isOpen={showResult.open}
+//         onClose={() => setShowResult({ ...showResult, open: false })}
+//         type={showResult.type}
+//         title={showResult.title}
+//         message={showResult.message}
+//       />
+
+//       {activeOrder && (
+//         <FloatingTimer
+//           orderId={activeOrder.orderId}
+//           tableNumber={activeOrder.tableNumber}
+//           initialDuration={activeOrder.timeRemaining}
+//           onExpire={handleTimerExpire}
+//           onOpenModal={() => setShowOrderDetail(true)}
+//         />
+//       )}
+
+//       <div className="container mx-auto px-4 py-5 max-w-7xl">
+//         {/* Header */}
+//         <div className="flex justify-between items-center flex-wrap gap-3 mb-6">
+//           <div>
+//             <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+//               <RestaurantIcon className="text-orange-500" /> NutriScan·AI
+//             </h1>
+//             <p className="text-gray-500 text-sm">
+//               Table {tableInfo.tableNumber}{" "}
+//               {tableInfo.customerName && `· ${tableInfo.customerName}`} ·
+//               AI-Powered Ingredient Analysis
+//             </p>
+//           </div>
+//           <div className="flex gap-2">
+//             <button
+//               onClick={() => setShowConditionModal(true)}
+//               className={`p-2 rounded-full shadow-lg transition ${selectedConditions.length > 0 ? "bg-purple-500 text-white" : "bg-white text-purple-500"}`}
+//             >
+//               <HealthIcon />
+//               {selectedConditions.length > 0 && (
+//                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+//                   {selectedConditions.length}
+//                 </span>
+//               )}
+//             </button>
+//             <button
+//               onClick={() => setShowCart(true)}
+//               className="relative bg-white p-2 rounded-full shadow-lg hover:shadow-xl transition"
+//             >
+//               <CartIcon className="text-orange-500" />
+//               {cart.length > 0 && (
+//                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+//                   {cart.reduce((a, b) => a + b.quantity, 0)}
+//                 </span>
+//               )}
+//             </button>
+//           </div>
+//         </div>
+
+//         {/* Health Banner - Shows selected conditions */}
+//         {selectedConditions.length > 0 && (
+//           <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-4">
+//             <div className="flex justify-between items-center flex-wrap gap-2">
+//               <div className="flex items-center gap-2">
+//                 <ShieldIcon className="text-emerald-600" />
+//                 <span className="text-sm text-emerald-800">
+//                   🛡️ Personalized for: {selectedConditions.join(", ")}
+//                 </span>
+//               </div>
+//               <button
+//                 onClick={() => setShowConditionModal(true)}
+//                 className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium"
+//               >
+//                 Update Conditions
+//               </button>
+//             </div>
+//           </div>
+//         )}
+
+//         {/* Search */}
+//         <div className="relative mb-4">
+//           <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+//           <input
+//             className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-orange-500 bg-white shadow-sm"
+//             placeholder="Search dishes..."
+//             value={search}
+//             onChange={(e) => setSearch(e.target.value)}
+//           />
+//         </div>
+
+//         {/* Categories */}
+//         <div className="flex gap-2 overflow-auto pb-2 mb-4">
+//           {categories.map((cat) => (
+//             <button
+//               key={cat}
+//               onClick={() => setActiveCategory(cat)}
+//               className={`px-4 py-1.5 rounded-full whitespace-nowrap transition font-medium text-sm ${
+//                 activeCategory === cat
+//                   ? "bg-orange-500 text-white shadow-md"
+//                   : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"
+//               }`}
+//             >
+//               {cat === "all" ? "All Items" : cat}
+//             </button>
+//           ))}
+//         </div>
+
+//         {/* Menu Grid */}
+//         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+//           {paginated.map((item) => (
+//             <motion.div
+//               whileHover={{ scale: 1.02 }}
+//               whileTap={{ scale: 0.98 }}
+//               key={item.id}
+//               className="bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition"
+//               onClick={() => handleItemClick(item)}
+//             >
+//               <img
+//                 src={item.image}
+//                 className="h-36 w-full object-cover"
+//                 alt={item.name}
+//               />
+//               <div className="p-3">
+//                 <h3 className="font-bold text-gray-800">{item.name}</h3>
+//                 <p className="text-xs text-gray-500 line-clamp-1 mt-1">
+//                   {item.description}
+//                 </p>
+//                 <div className="flex justify-between items-center mt-2">
+//                   <span className="text-orange-600 font-bold">
+//                     RWF {item.price.toLocaleString()}
+//                   </span>
+//                   <span className="text-gray-400 text-xs flex items-center gap-1">
+//                     <TimeIcon fontSize="small" /> {item.prepTime}min
+//                   </span>
+//                 </div>
+//               </div>
+//             </motion.div>
+//           ))}
+//         </div>
+
+//         {filtered.length === 0 && (
+//           <div className="text-center py-12">
+//             <SearchIcon className="text-gray-300 text-6xl mx-auto mb-4" />
+//             <p className="text-gray-500">No items match your search.</p>
+//           </div>
+//         )}
+
+//         {/* Pagination */}
+//         {totalPages > 1 && (
+//           <div className="flex justify-center gap-2 mt-6">
+//             <button
+//               onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+//               disabled={currentPage === 1}
+//               className="w-8 h-8 rounded bg-white disabled:opacity-50"
+//             >
+//               ←
+//             </button>
+//             {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+//               <button
+//                 key={p}
+//                 onClick={() => setCurrentPage(p)}
+//                 className={`w-8 h-8 rounded ${currentPage === p ? "bg-orange-500 text-white" : "bg-white"}`}
+//               >
+//                 {p}
+//               </button>
+//             ))}
+//             <button
+//               onClick={() =>
+//                 setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+//               }
+//               disabled={currentPage === totalPages}
+//               className="w-8 h-8 rounded bg-white disabled:opacity-50"
+//             >
+//               →
+//             </button>
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
 import React, {
   useState,
   useEffect,
@@ -5038,304 +7174,724 @@ import {
   Edit as EditIcon,
   Restaurant as RestaurantIcon,
   Person as PersonIcon,
+  Dangerous as DangerousIcon,
+  Warning as WarningIcon,
+  Check as CheckIcon,
 } from "@mui/icons-material";
 
-// ========== OPENFDA FOOD API ONLY (Using Axios) ==========
-const OPENFDA_FOOD_API = "https://api.fda.gov/food/enforcement.json";
-
-// API Service using Axios
-const fdaApi = axios.create({
-  baseURL: "https://api.fda.gov",
-  timeout: 10000,
-  headers: {
-    "Content-Type": "application/json",
+// ========== MEDICAL CONDITIONS DATABASE ==========
+const MEDICAL_CONDITIONS = [
+  {
+    id: 1,
+    name: "Peanut Allergy",
+    category: "Allergy",
+    severity: "high",
+    description: "Severe allergic reaction to peanuts",
   },
-});
+  {
+    id: 2,
+    name: "Tree Nut Allergy",
+    category: "Allergy",
+    severity: "high",
+    description: "Allergic to almonds, walnuts, cashews, etc.",
+  },
+  {
+    id: 3,
+    name: "Shellfish Allergy",
+    category: "Allergy",
+    severity: "high",
+    description: "Allergic to shrimp, crab, lobster",
+  },
+  {
+    id: 4,
+    name: "Fish Allergy",
+    category: "Allergy",
+    severity: "high",
+    description: "Allergic to finned fish",
+  },
+  {
+    id: 5,
+    name: "Egg Allergy",
+    category: "Allergy",
+    severity: "moderate",
+    description: "Allergic to eggs",
+  },
+  {
+    id: 6,
+    name: "Soy Allergy",
+    category: "Allergy",
+    severity: "moderate",
+    description: "Allergic to soy products",
+  },
+  {
+    id: 7,
+    name: "Wheat Allergy",
+    category: "Allergy",
+    severity: "moderate",
+    description: "Allergic to wheat",
+  },
+  {
+    id: 8,
+    name: "Milk Allergy",
+    category: "Allergy",
+    severity: "high",
+    description: "Allergic to dairy products",
+  },
+  {
+    id: 9,
+    name: "Celiac Disease",
+    category: "Autoimmune",
+    severity: "high",
+    description: "Cannot consume gluten",
+  },
+  {
+    id: 10,
+    name: "Lactose Intolerance",
+    category: "Digestive",
+    severity: "low",
+    description: "Difficulty digesting lactose",
+  },
+  {
+    id: 11,
+    name: "Type 2 Diabetes",
+    category: "Metabolic",
+    severity: "moderate",
+    description: "Blood sugar management needed",
+  },
+  {
+    id: 12,
+    name: "Type 1 Diabetes",
+    category: "Metabolic",
+    severity: "moderate",
+    description: "Insulin dependent",
+  },
+  {
+    id: 13,
+    name: "Hypertension",
+    category: "Cardiovascular",
+    severity: "moderate",
+    description: "High blood pressure",
+  },
+  {
+    id: 14,
+    name: "High Cholesterol",
+    category: "Cardiovascular",
+    severity: "moderate",
+    description: "Cholesterol management needed",
+  },
+  {
+    id: 15,
+    name: "Gout",
+    category: "Metabolic",
+    severity: "moderate",
+    description: "Uric acid buildup",
+  },
+  {
+    id: 16,
+    name: "GERD",
+    category: "Digestive",
+    severity: "low",
+    description: "Acid reflux",
+  },
+  {
+    id: 17,
+    name: "Kidney Disease",
+    category: "Renal",
+    severity: "high",
+    description: "Limited sodium and potassium",
+  },
+  {
+    id: 18,
+    name: "Migraine",
+    category: "Neurological",
+    severity: "low",
+    description: "Trigger foods may cause headaches",
+  },
+];
 
-// Function to search ingredient health risks using ONLY OpenFDA Food API
-// Returns concise warnings (max 2 sentences)
-const searchIngredientOnline = async (ingredient, userConditions = []) => {
-  const results = [];
+// ========== MENU ITEMS ==========
+const MENU_ITEMS = [
+  {
+    id: 1,
+    name: "Isombe ya Nyama",
+    price: 2800,
+    ingredients: [
+      "cassava leaves",
+      "beef",
+      "coconut milk",
+      "peanut flour",
+      "palm oil",
+    ],
+    description: "Traditional cassava leaf stew with beef",
+    prepTime: 18,
+    category: "Mains",
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",
+  },
+  {
+    id: 2,
+    name: "Brochette de Boeuf",
+    price: 3500,
+    ingredients: ["beef sirloin", "pepper sauce", "potato", "spices", "salt"],
+    description: "Grilled beef skewers with fries",
+    prepTime: 15,
+    category: "Mains",
+    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400",
+  },
+  {
+    id: 3,
+    name: "Ibiharage",
+    price: 1800,
+    ingredients: ["kidney beans", "palm oil", "tomato", "onion", "salt"],
+    description: "Rwandan bean stew - vegan",
+    prepTime: 12,
+    category: "Vegan",
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400",
+  },
+  {
+    id: 4,
+    name: "Matoke ya Nyama",
+    price: 3200,
+    ingredients: [
+      "green plantain",
+      "goat meat",
+      "ginger",
+      "onion",
+      "coconut oil",
+    ],
+    description: "Steamed plantain with goat stew",
+    prepTime: 20,
+    category: "Mains",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400",
+  },
+  {
+    id: 5,
+    name: "Grilled Tilapia",
+    price: 4500,
+    ingredients: ["tilapia", "lemon", "garlic", "rosemary", "olive oil"],
+    description: "Fresh lake tilapia",
+    prepTime: 16,
+    category: "Seafood",
+    image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400",
+  },
+  {
+    id: 6,
+    name: "Chicken Shawarma",
+    price: 4200,
+    ingredients: ["chicken", "yogurt", "garlic", "spices", "pita"],
+    description: "Marinated chicken wrap",
+    prepTime: 15,
+    category: "Mains",
+    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400",
+  },
+  {
+    id: 7,
+    name: "Beef Burger",
+    price: 4800,
+    ingredients: ["beef patty", "lettuce", "tomato", "cheese", "bun"],
+    description: "Angus beef burger with cheese",
+    prepTime: 12,
+    category: "Mains",
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
+  },
+  {
+    id: 8,
+    name: "Vegetable Pad Thai",
+    price: 3800,
+    ingredients: ["rice noodles", "tofu", "bean sprouts", "peanuts", "lime"],
+    description: "Classic Thai noodles",
+    prepTime: 14,
+    category: "Vegan",
+    image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400",
+  },
+  {
+    id: 9,
+    name: "Margherita Pizza",
+    price: 5200,
+    ingredients: ["pizza dough", "tomato sauce", "mozzarella", "basil"],
+    description: "Classic Italian pizza",
+    prepTime: 15,
+    category: "Mains",
+    image: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=400",
+  },
+  {
+    id: 10,
+    name: "Chocolate Lava Cake",
+    price: 6500,
+    ingredients: ["chocolate", "sugar", "butter", "eggs", "flour"],
+    description: "Warm molten chocolate cake",
+    prepTime: 12,
+    category: "Desserts",
+    image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400",
+  },
+  {
+    id: 11,
+    name: "Mango Sticky Rice",
+    price: 3500,
+    ingredients: ["glutinous rice", "mango", "coconut milk", "sugar"],
+    description: "Thai dessert",
+    prepTime: 10,
+    category: "Desserts",
+    image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400",
+  },
+  {
+    id: 12,
+    name: "Fresh Lemonade",
+    price: 1500,
+    ingredients: ["lemon", "sugar", "water", "mint"],
+    description: "Hand-squeezed lemonade",
+    prepTime: 3,
+    category: "Beverages",
+    image: "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400",
+  },
+];
 
-  try {
-    // Search OpenFDA Food Enforcement for recalls and warnings
-    const response = await fdaApi.get("/food/enforcement.json", {
-      params: {
-        search: ingredient,
-        limit: 5,
-      },
-    });
+// ========== INGREDIENT RISK DATABASE ==========
+// This maps each medical condition to ingredients that trigger it
+const INGREDIENT_RISK_DATABASE = {
+  "Peanut Allergy": {
+    keywords: [
+      "peanut",
+      "peanut flour",
+      "groundnut",
+      "arachis",
+      "peanut butter",
+    ],
+    severity: "high",
+    message: "⚠️ CONTAINS PEANUTS - Severe allergic reaction possible",
+    modification: "Substitute with sunflower seed butter",
+    safeAlternative: "Sunflower Seed Butter",
+  },
+  "Tree Nut Allergy": {
+    keywords: [
+      "almond",
+      "walnut",
+      "cashew",
+      "pistachio",
+      "hazelnut",
+      "coconut",
+      "macadamia",
+      "pecan",
+    ],
+    severity: "high",
+    message: "⚠️ CONTAINS TREE NUTS - Potential anaphylaxis risk",
+    modification: "Omit nuts or substitute with seeds",
+    safeAlternative: "Pumpkin or sunflower seeds",
+  },
+  "Shellfish Allergy": {
+    keywords: [
+      "shrimp",
+      "prawn",
+      "crab",
+      "lobster",
+      "crayfish",
+      "langoustine",
+      "shellfish",
+    ],
+    severity: "high",
+    message: "⚠️ CONTAINS SHELLFISH - Severe allergic reaction risk",
+    modification: "Substitute with mushrooms or chicken",
+    safeAlternative: "King oyster mushroom or chicken",
+  },
+  "Fish Allergy": {
+    keywords: [
+      "tilapia",
+      "salmon",
+      "tuna",
+      "mackerel",
+      "cod",
+      "bass",
+      "trout",
+      "fish",
+    ],
+    severity: "high",
+    message: "⚠️ CONTAINS FISH - Allergic reaction possible",
+    modification: "Substitute with chicken or tofu",
+    safeAlternative: "Grilled chicken or tofu",
+  },
+  "Milk Allergy": {
+    keywords: [
+      "milk",
+      "cheese",
+      "butter",
+      "yogurt",
+      "cream",
+      "mozzarella",
+      "dairy",
+      "whey",
+      "casein",
+    ],
+    severity: "high",
+    message: "⚠️ CONTAINS DAIRY - Milk allergy risk",
+    modification: "Use plant-based dairy alternatives",
+    safeAlternative: "Oat milk, coconut milk, vegan cheese",
+  },
+  "Celiac Disease": {
+    keywords: [
+      "wheat",
+      "flour",
+      "gluten",
+      "barley",
+      "rye",
+      "bread",
+      "pita",
+      "bun",
+      "pasta",
+      "dough",
+    ],
+    severity: "high",
+    message: "⚠️ CONTAINS GLUTEN - Autoimmune reaction trigger",
+    modification: "Use gluten-free alternatives",
+    safeAlternative: "Gluten-free flour, rice flour, almond flour",
+  },
+  "Egg Allergy": {
+    keywords: ["egg", "eggs", "mayonnaise", "albumin", "meringue"],
+    severity: "moderate",
+    message: "⚡ CONTAINS EGGS - Allergic reaction possible",
+    modification: "Use egg replacer or omit",
+    safeAlternative: "Flax egg or commercial egg replacer",
+  },
+  "Soy Allergy": {
+    keywords: ["soy", "tofu", "soy sauce", "edamame", "miso", "tempeh"],
+    severity: "moderate",
+    message: "⚡ CONTAINS SOY - Potential allergen",
+    modification: "Use coconut aminos instead of soy sauce",
+    safeAlternative: "Coconut aminos, chickpea tofu",
+  },
+  "Wheat Allergy": {
+    keywords: ["wheat", "flour", "bread", "pita", "bun", "pasta", "dough"],
+    severity: "moderate",
+    message: "⚡ CONTAINS WHEAT - Allergic reaction possible",
+    modification: "Use gluten-free or wheat-free alternatives",
+    safeAlternative: "Gluten-free flour, rice flour",
+  },
+  "Type 2 Diabetes": {
+    keywords: [
+      "sugar",
+      "honey",
+      "syrup",
+      "cane sugar",
+      "brown sugar",
+      "molasses",
+      "sweetener",
+      "coconut sugar",
+    ],
+    severity: "moderate",
+    message: "⚡ HIGH SUGAR - May spike blood glucose",
+    modification: "Use sugar-free sweetener or reduce sugar",
+    safeAlternative: "Monk fruit, stevia, erythritol",
+  },
+  "Type 1 Diabetes": {
+    keywords: [
+      "sugar",
+      "honey",
+      "syrup",
+      "cane sugar",
+      "brown sugar",
+      "molasses",
+    ],
+    severity: "moderate",
+    message: "⚡ CONTAINS SUGAR - Requires insulin adjustment",
+    modification: "Request sugar-free version",
+    safeAlternative: "Sugar-free sweetener",
+  },
+  Hypertension: {
+    keywords: [
+      "salt",
+      "sodium",
+      "soy sauce",
+      "teriyaki",
+      "fish sauce",
+      "cured",
+      "pickled",
+      "broth",
+    ],
+    severity: "moderate",
+    message: "⚡ HIGH SODIUM - May increase blood pressure",
+    modification: "Request low-sodium preparation",
+    safeAlternative: "Low-sodium version, herbs instead of salt",
+  },
+  "High Cholesterol": {
+    keywords: [
+      "butter",
+      "palm oil",
+      "coconut milk",
+      "beef fat",
+      "lard",
+      "fried",
+      "cheese",
+      "cream",
+    ],
+    severity: "moderate",
+    message: "⚡ HIGH SATURATED FAT - May affect cholesterol",
+    modification: "Use heart-healthy oils (olive, avocado)",
+    safeAlternative: "Olive oil, avocado oil",
+  },
+  Gout: {
+    keywords: [
+      "beef",
+      "red meat",
+      "organ meat",
+      "sardines",
+      "anchovies",
+      "shellfish",
+      "beef sirloin",
+      "goat meat",
+    ],
+    severity: "moderate",
+    message: "⚡ HIGH PURINE - May trigger gout flare",
+    modification: "Choose poultry or plant protein instead",
+    safeAlternative: "Chicken, turkey, tofu, beans",
+  },
+  "Kidney Disease": {
+    keywords: [
+      "salt",
+      "sodium",
+      "potassium",
+      "phosphorus",
+      "beans",
+      "legumes",
+      "dairy",
+      "nuts",
+    ],
+    severity: "high",
+    message: "⚠️ MAY STRESS KIDNEYS - Consult your doctor",
+    modification: "Limited portion with medical approval",
+    safeAlternative: "Consult healthcare provider",
+  },
+  "Lactose Intolerance": {
+    keywords: [
+      "milk",
+      "cheese",
+      "butter",
+      "yogurt",
+      "cream",
+      "mozzarella",
+      "dairy",
+    ],
+    severity: "low",
+    message: "ℹ️ CONTAINS LACTOSE - May cause digestive discomfort",
+    modification: "Use lactose-free or plant-based dairy",
+    safeAlternative: "Lactose-free milk, vegan cheese",
+  },
+  GERD: {
+    keywords: [
+      "tomato",
+      "citrus",
+      "lemon",
+      "lime",
+      "spicy",
+      "chili",
+      "coffee",
+      "chocolate",
+      "mint",
+      "onion",
+      "garlic",
+    ],
+    severity: "low",
+    message: "ℹ️ MAY TRIGGER REFLUX - Eat with caution",
+    modification: "Request mild version without triggers",
+    safeAlternative: "Mild herb seasoning",
+  },
+  Migraine: {
+    keywords: [
+      "caffeine",
+      "coffee",
+      "chocolate",
+      "aged cheese",
+      "red wine",
+      "processed meat",
+      "msg",
+    ],
+    severity: "low",
+    message: "ℹ️ POTENTIAL MIGRAINE TRIGGER",
+    modification: "Omit trigger ingredients",
+    safeAlternative: "Caffeine-free, chocolate-free version",
+  },
+};
 
-    if (
-      response.data &&
-      response.data.results &&
-      response.data.results.length > 0
-    ) {
-      response.data.results.forEach((result) => {
-        let severity = "moderate";
-        if (result.classification === "Class I") severity = "high";
-        else if (result.classification === "Class II") severity = "moderate";
-        else if (result.classification === "Class III") severity = "low";
+// ========== INGREDIENT ANALYSIS FUNCTION ==========
+// This analyzes each ingredient against user's medical conditions
+const analyzeDishForConditions = (item, userConditions) => {
+  if (!userConditions || userConditions.length === 0) {
+    return {
+      overallStatus: "safe",
+      overallColor: "green",
+      overallIcon: "✅",
+      overallMessage:
+        "This dish appears safe based on standard dietary guidelines",
+      recommendation: "Enjoy your meal! No medical conditions selected.",
+      ingredientAnalysis: item.ingredients.map((ing) => ({
+        ingredient: ing,
+        status: "safe",
+        statusIcon: "✅",
+        message: "No conflicts detected with your profile",
+        severity: "none",
+        modificationAvailable: false,
+        safeAlternative: null,
+      })),
+      canBeModified: false,
+      highRiskCount: 0,
+      moderateRiskCount: 0,
+      lowRiskCount: 0,
+    };
+  }
 
-        // Create concise message (max 2 sentences)
-        let shortMessage = "";
-        const reason = result.reason_for_recall || "";
-        const productDesc = result.product_description || "";
+  const ingredientAnalysis = [];
+  let highRiskCount = 0;
+  let moderateRiskCount = 0;
+  let lowRiskCount = 0;
+  let modificationsAvailable = [];
 
-        if (reason && reason.length > 100) {
-          shortMessage = reason.substring(0, 97) + "...";
-        } else if (reason) {
-          shortMessage = reason;
-        } else if (productDesc) {
-          shortMessage =
-            productDesc.length > 100
-              ? productDesc.substring(0, 97) + "..."
-              : productDesc;
-        } else {
-          shortMessage = `${ingredient} has FDA safety concerns.`;
+  for (const ingredient of item.ingredients) {
+    let highestSeverity = "safe";
+    let relevantCondition = null;
+    let relevantMessage = "";
+    let modification = null;
+    let safeAlternative = null;
+
+    // Check ingredient against each user condition
+    for (const condition of userConditions) {
+      const riskRule = INGREDIENT_RISK_DATABASE[condition];
+      if (riskRule) {
+        // Check if ingredient matches any keyword for this condition
+        const matches = riskRule.keywords.some((keyword) =>
+          ingredient.toLowerCase().includes(keyword.toLowerCase()),
+        );
+
+        if (matches) {
+          // Track highest severity
+          if (riskRule.severity === "high") {
+            highestSeverity = "high";
+            relevantCondition = condition;
+            relevantMessage = riskRule.message;
+            modification = riskRule.modification;
+            safeAlternative = riskRule.safeAlternative;
+          } else if (
+            riskRule.severity === "moderate" &&
+            highestSeverity !== "high"
+          ) {
+            highestSeverity = "moderate";
+            relevantCondition = condition;
+            relevantMessage = riskRule.message;
+            modification = riskRule.modification;
+            safeAlternative = riskRule.safeAlternative;
+          } else if (
+            riskRule.severity === "low" &&
+            highestSeverity === "safe"
+          ) {
+            highestSeverity = "low";
+            relevantCondition = condition;
+            relevantMessage = riskRule.message;
+            modification = riskRule.modification;
+            safeAlternative = riskRule.safeAlternative;
+          }
         }
-
-        results.push({
-          ingredient,
-          source: "FDA",
-          severity: severity,
-          condition: result.reason_for_recall
-            ? "Recall Warning"
-            : "Safety Alert",
-          message: shortMessage,
-          clinicalNote: `Classification: ${result.classification || "Not specified"}`,
-          mechanism: result.product_type || "Food product",
-          confidence: 0.85,
-          recallId: result.report_id,
-        });
-      });
-    }
-  } catch (error) {
-    console.warn("OpenFDA Food API search failed:", error.message);
-  }
-
-  // Check against user's medical conditions (local allergen check)
-  const userConditionWarnings = checkAgainstUserConditions(
-    ingredient,
-    userConditions,
-  );
-  results.push(...userConditionWarnings);
-
-  // Remove duplicates and sort by severity
-  const uniqueResults = results.filter(
-    (v, i, a) =>
-      a.findIndex(
-        (t) => t.condition === v.condition && t.message === v.message,
-      ) === i,
-  );
-
-  const severityOrder = { high: 3, moderate: 2, low: 1, info: 0 };
-  return uniqueResults.sort(
-    (a, b) =>
-      (severityOrder[b.severity] || 0) - (severityOrder[a.severity] || 0),
-  );
-};
-
-// Check ingredient against user's specific conditions
-const checkAgainstUserConditions = (ingredient, userConditions) => {
-  const warnings = [];
-
-  const allergenMap = {
-    peanut: ["Peanut Allergy"],
-    peanuts: ["Peanut Allergy"],
-    coconut: ["Tree Nut Allergy"],
-    almond: ["Tree Nut Allergy"],
-    walnut: ["Tree Nut Allergy"],
-    cashew: ["Tree Nut Allergy"],
-    shrimp: ["Shellfish Allergy"],
-    prawn: ["Shellfish Allergy"],
-    crab: ["Shellfish Allergy"],
-    lobster: ["Shellfish Allergy"],
-    salmon: ["Fish Allergy"],
-    tuna: ["Fish Allergy"],
-    egg: ["Egg Allergy"],
-    eggs: ["Egg Allergy"],
-    soy: ["Soy Allergy"],
-    tofu: ["Soy Allergy"],
-    wheat: ["Celiac Disease", "Wheat Allergy"],
-    flour: ["Celiac Disease", "Wheat Allergy"],
-    gluten: ["Celiac Disease"],
-    milk: ["Lactose Intolerance", "Milk Allergy"],
-    cheese: ["Lactose Intolerance", "Milk Allergy"],
-    butter: ["Lactose Intolerance"],
-    sugar: ["Type 2 Diabetes", "Type 1 Diabetes"],
-    salt: ["Hypertension", "Kidney Disease"],
-    sodium: ["Hypertension", "Kidney Disease"],
-    beef: ["Gout", "High Cholesterol"],
-    coffee: ["Migraine", "Anxiety", "GERD"],
-    caffeine: ["Migraine", "Anxiety", "GERD"],
-    chocolate: ["Migraine", "Anxiety"],
-    tomato: ["GERD"],
-    citrus: ["GERD"],
-  };
-
-  for (const [key, conditions] of Object.entries(allergenMap)) {
-    if (ingredient.toLowerCase().includes(key)) {
-      const matchingConditions = conditions.filter((c) =>
-        userConditions.includes(c),
-      );
-      matchingConditions.forEach((condition) => {
-        warnings.push({
-          ingredient,
-          source: "Health Profile",
-          severity: condition.includes("Allergy") ? "high" : "moderate",
-          condition: condition,
-          message: `${ingredient} may trigger ${condition.toLowerCase()}. Consider alternatives.`,
-          clinicalNote: "Consult your healthcare provider",
-          mechanism: "Allergen reaction",
-          confidence: 0.95,
-        });
-      });
-    }
-  }
-
-  return warnings;
-};
-
-// Get modification suggestions based on condition
-const getModificationForIngredient = (ingredient, condition) => {
-  const substitutionMap = {
-    "Peanut Allergy": {
-      peanut: {
-        name: "Sunflower Seed Butter",
-        description: "Nut-free alternative",
-        icon: "🌻",
-        healthImpact: "Hypoallergenic",
-      },
-      "peanut flour": {
-        name: "Coconut Flour",
-        description: "Nut-free, high fiber",
-        icon: "🥥",
-        healthImpact: "Rich in MCTs",
-      },
-    },
-    "Tree Nut Allergy": {
-      coconut: {
-        name: "Oat Cream",
-        description: "Dairy-free, nut-free",
-        icon: "🌾",
-        healthImpact: "Low allergenic",
-      },
-      almond: {
-        name: "Pumpkin Seeds",
-        description: "Nut-free seed alternative",
-        icon: "🎃",
-        healthImpact: "Rich in magnesium",
-      },
-    },
-    "Shellfish Allergy": {
-      shrimp: {
-        name: "King Oyster Mushroom",
-        description: "Mimics shrimp texture",
-        icon: "🍄",
-        healthImpact: "Cholesterol-free",
-      },
-      crab: {
-        name: "Hearts of Palm",
-        description: "Flaky texture like crab",
-        icon: "🌴",
-        healthImpact: "Low calorie",
-      },
-    },
-    "Type 2 Diabetes": {
-      sugar: {
-        name: "Monk Fruit Sweetener",
-        description: "Zero glycemic impact",
-        icon: "🍈",
-        healthImpact: "No blood sugar spike",
-      },
-      honey: {
-        name: "Stevia Drops",
-        description: "Zero-calorie sweetener",
-        icon: "🌿",
-        healthImpact: "Improves insulin sensitivity",
-      },
-    },
-    Hypertension: {
-      salt: {
-        name: "Potassium Salt Substitute",
-        description: "Sodium-free seasoning",
-        icon: "⚖️",
-        healthImpact: "May lower BP",
-      },
-      "soy sauce": {
-        name: "Coconut Aminos",
-        description: "Low-sodium alternative",
-        icon: "🥥",
-        healthImpact: "73% less sodium",
-      },
-    },
-    "Celiac Disease": {
-      wheat: {
-        name: "Almond Flour",
-        description: "Gluten-free alternative",
-        icon: "🌰",
-        healthImpact: "High protein",
-      },
-      flour: {
-        name: "Rice Flour",
-        description: "Gluten-free flour",
-        icon: "🍚",
-        healthImpact: "Easy to digest",
-      },
-    },
-    "Lactose Intolerance": {
-      milk: {
-        name: "Lactose-Free Milk",
-        description: "Real milk with lactase",
-        icon: "🥛",
-        healthImpact: "Complete nutrition",
-      },
-      cheese: {
-        name: "Nutritional Yeast",
-        description: "Cheesy flavor, dairy-free",
-        icon: "🧀",
-        healthImpact: "B-vitamin rich",
-      },
-    },
-    GERD: {
-      tomato: {
-        name: "Roasted Red Pepper",
-        description: "Low-acid alternative",
-        icon: "🫑",
-        healthImpact: "Won't trigger reflux",
-      },
-      citrus: {
-        name: "Mango",
-        description: "Non-acidic fruit",
-        icon: "🥭",
-        healthImpact: "Alkaline-forming",
-      },
-      spicy: {
-        name: "Herb Seasoning",
-        description: "Flavorful without heat",
-        icon: "🌿",
-        healthImpact: "Gentle on stomach",
-      },
-    },
-  };
-
-  const conditionMods = substitutionMap[condition];
-  if (conditionMods) {
-    for (const [key, mod] of Object.entries(conditionMods)) {
-      if (ingredient.toLowerCase().includes(key)) {
-        return mod;
       }
     }
+
+    // Count risks by severity
+    if (highestSeverity === "high") highRiskCount++;
+    else if (highestSeverity === "moderate") moderateRiskCount++;
+    else if (highestSeverity === "low") lowRiskCount++;
+
+    // Build analysis for this ingredient
+    let statusIcon, statusMessage, statusColor;
+    switch (highestSeverity) {
+      case "high":
+        statusIcon = "🔴";
+        statusColor = "red";
+        statusMessage =
+          relevantMessage ||
+          `HIGH RISK: Contains ${ingredient} - Avoid for ${relevantCondition || "your condition"}`;
+        break;
+      case "moderate":
+        statusIcon = "🟡";
+        statusColor = "orange";
+        statusMessage =
+          relevantMessage ||
+          `CAUTION: ${ingredient} - Limit intake for ${relevantCondition || "your condition"}`;
+        break;
+      case "low":
+        statusIcon = "🟢";
+        statusColor = "yellow";
+        statusMessage =
+          relevantMessage ||
+          `LOW RISK: ${ingredient} - Generally acceptable but monitor symptoms`;
+        break;
+      default:
+        statusIcon = "✅";
+        statusColor = "green";
+        statusMessage = `SAFE: ${ingredient} - No conflicts with your conditions`;
+    }
+
+    if (modification && !modificationsAvailable.includes(modification)) {
+      modificationsAvailable.push(modification);
+    }
+
+    ingredientAnalysis.push({
+      ingredient: ingredient,
+      status: highestSeverity,
+      statusIcon: statusIcon,
+      statusColor: statusColor,
+      message: statusMessage,
+      relevantCondition: relevantCondition,
+      modificationAvailable: modification !== null,
+      modificationText: modification,
+      safeAlternative: safeAlternative,
+    });
   }
-  return null;
+
+  // Determine overall dish status
+  let overallStatus, overallColor, overallIcon, overallMessage, recommendation;
+
+  if (highRiskCount > 0) {
+    overallStatus = "high_risk";
+    overallColor = "red";
+    overallIcon = "🔴";
+    overallMessage = `⚠️ HIGH RISK DISH - Contains ${highRiskCount} ingredient(s) that may be dangerous for your condition(s)`;
+    recommendation =
+      "STRONG RECOMMENDATION: Do NOT order this dish, or request significant modifications below";
+  } else if (moderateRiskCount > 0) {
+    overallStatus = "moderate_risk";
+    overallColor = "orange";
+    overallIcon = "🟡";
+    overallMessage = `⚡ MODERATE RISK DISH - Contains ${moderateRiskCount} ingredient(s) that should be limited with your condition(s)`;
+    recommendation =
+      "RECOMMENDATION: Order with modifications or in small portions only";
+  } else if (lowRiskCount > 0) {
+    overallStatus = "low_risk";
+    overallColor = "yellow";
+    overallIcon = "🟢";
+    overallMessage = `ℹ️ LOW RISK DISH - Contains ${lowRiskCount} ingredient(s) that may cause mild symptoms for some people`;
+    recommendation = "Generally acceptable, but monitor for any reaction";
+  } else {
+    overallStatus = "safe";
+    overallColor = "green";
+    overallIcon = "✅";
+    overallMessage =
+      "✓ SAFE DISH - All ingredients appear compatible with your medical conditions";
+    recommendation = "This dish is safe for you to enjoy!";
+  }
+
+  return {
+    overallStatus: overallStatus,
+    overallColor: overallColor,
+    overallIcon: overallIcon,
+    overallMessage: overallMessage,
+    recommendation: recommendation,
+    ingredientAnalysis: ingredientAnalysis,
+    canBeModified: modificationsAvailable.length > 0,
+    modificationsAvailable: modificationsAvailable,
+    highRiskCount: highRiskCount,
+    moderateRiskCount: moderateRiskCount,
+    lowRiskCount: lowRiskCount,
+  };
 };
 
 // ========== API SERVICE FOR ORDER STORAGE ==========
 const ORDER_API_URL = "https://your-api-endpoint.com/api/orders";
 
 const apiService = {
-  // Send complete order to API with all details
   sendOrderToAPI: async (orderData) => {
     const payload = {
       orderId: `ORD_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -5378,16 +7934,11 @@ const apiService = {
           Accept: "application/json",
         },
       });
-
-      console.log("Order stored successfully:", response.data);
-
-      // Store in localStorage for backup
       const storedOrders = JSON.parse(
         localStorage.getItem("order_history") || "[]",
       );
       storedOrders.push(payload);
       localStorage.setItem("order_history", JSON.stringify(storedOrders));
-
       return { success: true, data: response.data, orderId: payload.orderId };
     } catch (error) {
       console.error("API error, storing locally:", error);
@@ -5399,7 +7950,6 @@ const apiService = {
         fallbackTimestamp: new Date().toISOString(),
       });
       localStorage.setItem("fallback_orders", JSON.stringify(fallbackOrders));
-
       return {
         success: false,
         error: error.message,
@@ -5409,7 +7959,6 @@ const apiService = {
     }
   },
 
-  // Fetch order status
   getOrderStatus: async (orderId) => {
     try {
       const response = await axios.get(`${ORDER_API_URL}/${orderId}/status`);
@@ -5420,7 +7969,6 @@ const apiService = {
     }
   },
 
-  // Get all orders for a table
   getTableOrders: async (tableNumber) => {
     try {
       const response = await axios.get(
@@ -5456,7 +8004,6 @@ const FloatingTimer = ({
         return prev - 1;
       });
     }, 1000);
-
     return () => clearInterval(interval);
   }, [onExpire]);
 
@@ -5467,7 +8014,7 @@ const FloatingTimer = ({
   };
 
   const getTimerColor = () => {
-    if (timeLeft <= 60) return "bg-red-500";
+    if (timeLeft <= 60) return "bg-red-500 animate-pulse";
     if (timeLeft <= 300) return "bg-orange-500";
     return "bg-green-500";
   };
@@ -5519,7 +8066,7 @@ const TableSelectorModal = ({ isOpen, onClose, onConfirm }) => {
       >
         <div className="bg-gradient-to-r from-orange-600 to-red-600 p-4 rounded-t-2xl">
           <h2 className="text-white font-bold text-xl flex items-center gap-2">
-            <RestaurantIcon /> Table Information
+            <RestaurantIcon /> Welcome to NutriScan·AI
           </h2>
           <p className="text-orange-100 text-sm">
             Please enter your table details
@@ -5541,7 +8088,7 @@ const TableSelectorModal = ({ isOpen, onClose, onConfirm }) => {
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Customer Name (Optional)
+              Your Name (Optional)
             </label>
             <input
               type="text"
@@ -5570,180 +8117,7 @@ const TableSelectorModal = ({ isOpen, onClose, onConfirm }) => {
   );
 };
 
-// ========== MEDICAL CONDITIONS ==========
-const MEDICAL_CONDITIONS = [
-  { id: 1, name: "Peanut Allergy", category: "Allergy", severity: "high" },
-  { id: 2, name: "Tree Nut Allergy", category: "Allergy", severity: "high" },
-  { id: 3, name: "Shellfish Allergy", category: "Allergy", severity: "high" },
-  { id: 4, name: "Fish Allergy", category: "Allergy", severity: "high" },
-  { id: 5, name: "Egg Allergy", category: "Allergy", severity: "moderate" },
-  { id: 6, name: "Soy Allergy", category: "Allergy", severity: "moderate" },
-  { id: 7, name: "Wheat Allergy", category: "Allergy", severity: "moderate" },
-  { id: 8, name: "Milk Allergy", category: "Allergy", severity: "moderate" },
-  { id: 9, name: "Celiac Disease", category: "Autoimmune", severity: "high" },
-  {
-    id: 10,
-    name: "Lactose Intolerance",
-    category: "Digestive",
-    severity: "low",
-  },
-  { id: 11, name: "Type 2 Diabetes", category: "Metabolic", severity: "high" },
-  { id: 12, name: "Type 1 Diabetes", category: "Metabolic", severity: "high" },
-  {
-    id: 13,
-    name: "Hypertension",
-    category: "Cardiovascular",
-    severity: "moderate",
-  },
-  {
-    id: 14,
-    name: "High Cholesterol",
-    category: "Cardiovascular",
-    severity: "moderate",
-  },
-  { id: 15, name: "Gout", category: "Metabolic", severity: "moderate" },
-  { id: 16, name: "GERD", category: "Digestive", severity: "low" },
-  { id: 17, name: "Kidney Disease", category: "Renal", severity: "high" },
-  { id: 18, name: "Migraine", category: "Neurological", severity: "low" },
-];
-
-// ========== MENU ITEMS ==========
-const MENU_ITEMS = [
-  {
-    id: 1,
-    name: "Isombe ya Nyama",
-    price: 2800,
-    ingredients: [
-      "cassava leaves",
-      "beef",
-      "coconut milk",
-      "peanut flour",
-      "palm oil",
-    ],
-    description: "Traditional cassava leaf stew",
-    prepTime: 18,
-    category: "Mains",
-    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400",
-  },
-  {
-    id: 2,
-    name: "Brochette de Boeuf",
-    price: 3500,
-    ingredients: ["beef sirloin", "pepper sauce", "potato", "spices", "salt"],
-    description: "Grilled skewers with fries",
-    prepTime: 15,
-    category: "Mains",
-    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400",
-  },
-  {
-    id: 3,
-    name: "Ibiharage",
-    price: 1800,
-    ingredients: ["kidney beans", "palm oil", "tomato", "onion", "salt"],
-    description: "Rwandan bean stew",
-    prepTime: 12,
-    category: "Vegan",
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400",
-  },
-  {
-    id: 4,
-    name: "Matoke ya Nyama",
-    price: 3200,
-    ingredients: [
-      "green plantain",
-      "goat meat",
-      "ginger",
-      "onion",
-      "coconut oil",
-    ],
-    description: "Steamed plantain with goat stew",
-    prepTime: 20,
-    category: "Mains",
-    image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400",
-  },
-  {
-    id: 5,
-    name: "Grilled Tilapia",
-    price: 4500,
-    ingredients: ["tilapia", "lemon", "garlic", "rosemary", "olive oil"],
-    description: "Fresh lake tilapia",
-    prepTime: 16,
-    category: "Seafood",
-    image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400",
-  },
-  {
-    id: 6,
-    name: "Chicken Shawarma",
-    price: 4200,
-    ingredients: ["chicken", "yogurt", "garlic", "spices", "pita"],
-    description: "Marinated chicken wrap",
-    prepTime: 15,
-    category: "Mains",
-    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400",
-  },
-  {
-    id: 7,
-    name: "Beef Burger",
-    price: 4800,
-    ingredients: ["beef patty", "lettuce", "tomato", "cheese", "bun"],
-    description: "Angus beef burger",
-    prepTime: 12,
-    category: "Mains",
-    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400",
-  },
-  {
-    id: 8,
-    name: "Vegetable Pad Thai",
-    price: 3800,
-    ingredients: ["rice noodles", "tofu", "bean sprouts", "peanuts", "lime"],
-    description: "Classic Thai noodles",
-    prepTime: 14,
-    category: "Vegan",
-    image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400",
-  },
-  {
-    id: 9,
-    name: "Margherita Pizza",
-    price: 5200,
-    ingredients: ["pizza dough", "tomato sauce", "mozzarella", "basil"],
-    description: "Classic Italian pizza",
-    prepTime: 15,
-    category: "Mains",
-    image: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=400",
-  },
-  {
-    id: 10,
-    name: "Chocolate Lava Cake",
-    price: 6500,
-    ingredients: ["chocolate", "sugar", "butter", "eggs", "flour"],
-    description: "Warm molten cake",
-    prepTime: 12,
-    category: "Desserts",
-    image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400",
-  },
-  {
-    id: 11,
-    name: "Mango Sticky Rice",
-    price: 3500,
-    ingredients: ["glutinous rice", "mango", "coconut milk", "sugar"],
-    description: "Thai dessert",
-    prepTime: 10,
-    category: "Desserts",
-    image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400",
-  },
-  {
-    id: 12,
-    name: "Fresh Lemonade",
-    price: 1500,
-    ingredients: ["lemon", "sugar", "water", "mint"],
-    description: "Hand-squeezed lemonade",
-    prepTime: 3,
-    category: "Beverages",
-    image: "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400",
-  },
-];
-
-// ========== MODAL COMPONENTS ==========
+// ========== CONDITION SELECTION MODAL ==========
 const ConditionModal = ({ isOpen, onClose, onSelect, selected }) => {
   const [localSelected, setLocalSelected] = useState(selected);
 
@@ -5772,10 +8146,10 @@ const ConditionModal = ({ isOpen, onClose, onSelect, selected }) => {
       >
         <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-4 rounded-t-2xl">
           <h2 className="text-white font-bold text-xl flex items-center gap-2">
-            <HealthIcon /> Medical Conditions
+            <HealthIcon /> Your Medical Conditions
           </h2>
           <p className="text-purple-200 text-sm">
-            Select all that apply for personalized analysis
+            Select all that apply for personalized ingredient analysis
           </p>
         </div>
         <div className="flex-1 overflow-y-auto p-4">
@@ -5815,14 +8189,41 @@ const ConditionModal = ({ isOpen, onClose, onSelect, selected }) => {
   );
 };
 
+// ========== INGREDIENT ANALYSIS MODAL ==========
 const AnalysisModal = ({
   isOpen,
   onClose,
   analysis,
   isLoading,
   onContinue,
+  item,
+  userConditions,
 }) => {
+  const [expandedIngredient, setExpandedIngredient] = useState(null);
+
   if (!isOpen) return null;
+
+  const getHeaderColor = () => {
+    if (analysis?.overallColor === "red") return "from-red-600 to-red-700";
+    if (analysis?.overallColor === "orange")
+      return "from-orange-500 to-orange-600";
+    if (analysis?.overallColor === "yellow")
+      return "from-yellow-500 to-amber-500";
+    return "from-emerald-600 to-green-600";
+  };
+
+  const getBorderColor = (statusColor) => {
+    switch (statusColor) {
+      case "red":
+        return "border-red-500 bg-red-50";
+      case "orange":
+        return "border-orange-500 bg-orange-50";
+      case "yellow":
+        return "border-yellow-500 bg-yellow-50";
+      default:
+        return "border-green-500 bg-green-50";
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -5833,72 +8234,186 @@ const AnalysisModal = ({
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col relative"
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] flex flex-col relative"
       >
-        <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-4 rounded-t-2xl">
-          <h2 className="text-white font-bold text-xl flex items-center gap-2">
-            <ScienceIcon /> FDA Safety Analysis
-          </h2>
-          <p className="text-emerald-100 text-sm">
-            Real-time FDA food safety check
-          </p>
+        <div
+          className={`bg-gradient-to-r ${getHeaderColor()} p-4 rounded-t-2xl text-white`}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <ScienceIcon />
+              <h2 className="font-bold text-xl">Ingredient Safety Analysis</h2>
+            </div>
+            <span className="text-2xl">{analysis?.overallIcon}</span>
+          </div>
+          <p className="text-white/80 text-sm mt-1">{item?.name}</p>
         </div>
+
         <div className="flex-1 overflow-y-auto p-4">
           {isLoading ? (
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500 mx-auto mb-4" />
-              <p className="text-gray-600">Searching FDA database...</p>
-              <p className="text-xs text-gray-400 mt-2">
-                OpenFDA Food Enforcement API
+              <p className="text-gray-600">
+                Analyzing ingredients against your conditions...
               </p>
             </div>
-          ) : analysis && analysis.length > 0 ? (
+          ) : analysis ? (
             <>
-              <div className="bg-amber-50 p-3 rounded-xl border-l-4 border-amber-500 mb-4">
-                <p className="text-amber-800 font-medium">
-                  {analysis.length} warning(s) detected
-                </p>
-              </div>
-              {analysis.map((risk, idx) => (
-                <div
-                  key={idx}
-                  className={`mb-3 p-3 rounded-xl border-l-4 ${
-                    risk.severity === "high"
-                      ? "border-red-500 bg-red-50"
-                      : risk.severity === "moderate"
-                        ? "border-orange-500 bg-orange-50"
-                        : "border-blue-500 bg-blue-50"
-                  }`}
-                >
-                  <div className="font-semibold text-sm">{risk.condition}</div>
-                  <p className="text-xs mt-1 text-gray-700">{risk.message}</p>
-                  <div className="flex justify-between items-center mt-2 text-xs">
-                    <span className="text-gray-500">{risk.source}</span>
-                    <span className="text-gray-500">
-                      ⚠️ {risk.severity.toUpperCase()}
-                    </span>
+              {/* Overall Status Banner */}
+              <div
+                className={`rounded-xl p-4 mb-4 border-l-4 ${getBorderColor(analysis.overallColor)}`}
+              >
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">{analysis.overallIcon}</span>
+                  <div className="flex-1">
+                    <p className="font-semibold text-gray-800">
+                      {analysis.overallMessage}
+                    </p>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {analysis.recommendation}
+                    </p>
+                    {(analysis.highRiskCount > 0 ||
+                      analysis.moderateRiskCount > 0) && (
+                      <div className="flex gap-3 mt-2 text-xs">
+                        {analysis.highRiskCount > 0 && (
+                          <span className="text-red-600">
+                            🔴 {analysis.highRiskCount} high risk
+                          </span>
+                        )}
+                        {analysis.moderateRiskCount > 0 && (
+                          <span className="text-orange-600">
+                            🟡 {analysis.moderateRiskCount} moderate risk
+                          </span>
+                        )}
+                        {analysis.lowRiskCount > 0 && (
+                          <span className="text-yellow-600">
+                            🟢 {analysis.lowRiskCount} low risk
+                          </span>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
-              ))}
+              </div>
+
+              {/* Ingredient Analysis List */}
+              <h3 className="font-semibold text-gray-700 mb-3">
+                📋 Ingredient Analysis
+              </h3>
+              <div className="space-y-3">
+                {analysis.ingredientAnalysis.map((ing, idx) => (
+                  <div key={idx} className="border rounded-xl overflow-hidden">
+                    <button
+                      onClick={() =>
+                        setExpandedIngredient(
+                          expandedIngredient === idx ? null : idx,
+                        )
+                      }
+                      className="w-full p-3 flex items-center justify-between hover:bg-gray-50 transition"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-xl">{ing.statusIcon}</span>
+                        <span className="font-medium text-gray-800">
+                          {ing.ingredient}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`text-xs px-2 py-1 rounded-full ${
+                            ing.status === "high"
+                              ? "bg-red-100 text-red-700"
+                              : ing.status === "moderate"
+                                ? "bg-orange-100 text-orange-700"
+                                : ing.status === "low"
+                                  ? "bg-yellow-100 text-yellow-700"
+                                  : "bg-green-100 text-green-700"
+                          }`}
+                        >
+                          {ing.status === "high"
+                            ? "HIGH RISK"
+                            : ing.status === "moderate"
+                              ? "CAUTION"
+                              : ing.status === "low"
+                                ? "LOW RISK"
+                                : "SAFE"}
+                        </span>
+                        <span className="text-gray-400">
+                          {expandedIngredient === idx ? "▲" : "▼"}
+                        </span>
+                      </div>
+                    </button>
+
+                    {expandedIngredient === idx && (
+                      <div className="p-3 bg-gray-50 border-t">
+                        <p className="text-sm text-gray-700 mb-2">
+                          {ing.message}
+                        </p>
+                        {ing.relevantCondition && (
+                          <p className="text-xs text-gray-500">
+                            ⚠️ Relevant condition: {ing.relevantCondition}
+                          </p>
+                        )}
+                        {ing.modificationAvailable && (
+                          <div className="mt-2 p-2 bg-emerald-50 rounded-lg">
+                            <p className="text-xs font-medium text-emerald-700">
+                              ✓ Modification Available:
+                            </p>
+                            <p className="text-xs text-emerald-600">
+                              {ing.modificationText}
+                            </p>
+                            {ing.safeAlternative && (
+                              <p className="text-xs text-emerald-600 mt-1">
+                                Suggested: {ing.safeAlternative}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Modification Summary */}
+              {analysis.modificationsAvailable &&
+                analysis.modificationsAvailable.length > 0 && (
+                  <div className="mt-4 p-3 bg-blue-50 rounded-xl">
+                    <p className="text-sm font-medium text-blue-700 mb-1">
+                      ✨ Customization Options Available
+                    </p>
+                    <ul className="text-xs text-blue-600 space-y-1">
+                      {analysis.modificationsAvailable
+                        .slice(0, 3)
+                        .map((mod, idx) => (
+                          <li key={idx}>• {mod}</li>
+                        ))}
+                    </ul>
+                  </div>
+                )}
             </>
           ) : (
             <div className="text-center py-8">
-              <CheckCircleIcon className="text-green-500 text-5xl mx-auto mb-3" />
-              <p className="text-green-700 font-medium">
-                ✓ No FDA warnings found
-              </p>
-              <p className="text-xs text-gray-500 mt-1">
-                Verified against OpenFDA database
+              <CheckIcon className="text-green-500 text-5xl mx-auto mb-3" />
+              <p className="text-green-700 font-medium">✓ No analysis needed</p>
+              <p className="text-xs text-gray-500">
+                Select medical conditions first for personalized analysis
               </p>
             </div>
           )}
         </div>
-        <div className="p-4 border-t">
+
+        <div className="p-4 border-t flex gap-3">
+          <button onClick={onClose} className="flex-1 border py-2 rounded-lg">
+            Close
+          </button>
           <button
             onClick={onContinue}
-            className="w-full bg-emerald-600 text-white py-3 rounded-xl font-semibold hover:bg-emerald-700 transition"
+            className="flex-1 bg-emerald-600 text-white py-2 rounded-lg font-semibold hover:bg-emerald-700 transition"
+            disabled={analysis?.overallStatus === "high_risk"}
           >
-            Continue to Customization
+            {analysis?.overallStatus === "high_risk"
+              ? "⚠️ Not Recommended"
+              : "Continue to Order"}
           </button>
         </div>
       </motion.div>
@@ -5906,34 +8421,39 @@ const AnalysisModal = ({
   );
 };
 
+// ========== CUSTOMIZATION MODAL ==========
 const CustomizationModal = ({
   isOpen,
   onClose,
   item,
   selectedConditions,
   onAddToCart,
+  analysis,
 }) => {
   const [customizations, setCustomizations] = useState([]);
   const [specialInstructions, setSpecialInstructions] = useState("");
   const [showModifications, setShowModifications] = useState(false);
-
-  // Find modifications for each ingredient based on conditions
-  const getSuggestions = () => {
-    const suggestions = [];
-    for (const condition of selectedConditions) {
-      for (const ingredient of item.ingredients) {
-        const mod = getModificationForIngredient(ingredient, condition);
-        if (mod && !suggestions.find((s) => s.ingredient === ingredient)) {
-          suggestions.push({ ingredient, ...mod, condition });
-        }
-      }
-    }
-    return suggestions;
-  };
-
-  const suggestions = getSuggestions();
+  const [selectedModifications, setSelectedModifications] = useState({});
 
   if (!isOpen) return null;
+
+  // Get ingredients that need modification based on analysis
+  const riskyIngredients =
+    analysis?.ingredientAnalysis?.filter(
+      (ing) => ing.status !== "safe" && ing.modificationAvailable,
+    ) || [];
+
+  const handleApplyModification = (ingredient, modification) => {
+    setSelectedModifications((prev) => ({
+      ...prev,
+      [ingredient]: modification,
+    }));
+    setCustomizations((prev) => {
+      const filtered = prev.filter((c) => !c.includes(ingredient));
+      return [...filtered, `Replace ${ingredient} - ${modification}`];
+    });
+    toast.success(`✓ Modification applied for ${ingredient}`);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -5948,76 +8468,99 @@ const CustomizationModal = ({
       >
         <div className="bg-gradient-to-r from-amber-600 to-orange-600 p-4 rounded-t-2xl">
           <h2 className="text-white font-bold text-xl flex items-center gap-2">
-            <EditIcon /> Customize Your Plate
+            <EditIcon /> Customize Your Order
           </h2>
           <p className="text-amber-100 text-sm">
             {item.name} - RWF {item.price.toLocaleString()}
           </p>
         </div>
+
         <div className="flex-1 overflow-y-auto p-4">
-          {/* Ingredients */}
+          {/* Original Ingredients */}
           <div className="mb-4">
-            <h3 className="font-semibold text-gray-700 mb-2">Ingredients:</h3>
+            <h3 className="font-semibold text-gray-700 mb-2">
+              📦 Original Ingredients:
+            </h3>
             <div className="flex flex-wrap gap-1">
-              {item.ingredients.map((ing, idx) => (
-                <span
-                  key={idx}
-                  className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full"
-                >
-                  {ing}
-                </span>
-              ))}
+              {item.ingredients.map((ing, idx) => {
+                const isRisky = riskyIngredients.some(
+                  (r) => r.ingredient === ing,
+                );
+                return (
+                  <span
+                    key={idx}
+                    className={`text-xs px-2 py-1 rounded-full ${
+                      isRisky
+                        ? "bg-red-100 text-red-700"
+                        : "bg-gray-100 text-gray-700"
+                    }`}
+                  >
+                    {ing} {isRisky && "⚠️"}
+                  </span>
+                );
+              })}
             </div>
           </div>
 
-          {/* Health Suggestions */}
-          {suggestions.length > 0 && (
+          {/* Health-Safe Modifications */}
+          {riskyIngredients.length > 0 && (
             <div className="mb-4">
               <button
                 onClick={() => setShowModifications(!showModifications)}
                 className="w-full text-left bg-emerald-50 p-3 rounded-xl border border-emerald-200"
               >
                 <div className="flex items-center gap-2">
-                  <ShieldIcon className="text-emerald-600 text-sm" />
+                  <ShieldIcon className="text-emerald-600" />
                   <span className="font-semibold text-emerald-800">
                     Health-Safe Modifications Available
                   </span>
                 </div>
                 <p className="text-xs text-emerald-600 mt-1">
-                  Tap to see suggestions for your health profile
+                  {riskyIngredients.length} ingredient(s) can be modified for
+                  your safety
                 </p>
               </button>
 
               {showModifications && (
                 <div className="mt-2 space-y-2">
-                  {suggestions.map((sug, idx) => (
-                    <div key={idx} className="bg-green-50 p-2 rounded-lg">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xl">{sug.icon}</span>
+                  {riskyIngredients.map((ing, idx) => (
+                    <div key={idx} className="bg-green-50 p-3 rounded-lg">
+                      <div className="flex items-start gap-2">
+                        <span className="text-xl">{ing.statusIcon}</span>
                         <div className="flex-1">
-                          <p className="text-sm font-medium">
-                            Replace {sug.ingredient}
+                          <p className="text-sm font-medium text-gray-800">
+                            {ing.ingredient}
                           </p>
-                          <p className="text-xs text-gray-600">
-                            → {sug.name} - {sug.description}
-                          </p>
-                          <p className="text-xs text-green-600 mt-1">
-                            {sug.healthImpact}
-                          </p>
+                          <p className="text-xs text-gray-600">{ing.message}</p>
+                          {ing.modificationText && (
+                            <div className="mt-2">
+                              <p className="text-xs font-medium text-emerald-700">
+                                Suggested modification:
+                              </p>
+                              <p className="text-xs text-emerald-600">
+                                {ing.modificationText}
+                              </p>
+                              {ing.safeAlternative && (
+                                <p className="text-xs text-emerald-600">
+                                  → {ing.safeAlternative}
+                                </p>
+                              )}
+                            </div>
+                          )}
                         </div>
                         <button
-                          onClick={() => {
-                            setCustomizations((prev) => [
-                              ...prev,
-                              `Replace ${sug.ingredient} with ${sug.name}`,
-                            ]);
-                            toast.success(
-                              `✓ Will use ${sug.name} instead of ${sug.ingredient}`,
-                            );
-                          }}
-                          className="bg-emerald-500 text-white px-2 py-1 rounded text-xs"
+                          onClick={() =>
+                            handleApplyModification(
+                              ing.ingredient,
+                              ing.modificationText,
+                            )
+                          }
+                          className="bg-emerald-500 text-white px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap"
+                          disabled={selectedModifications[ing.ingredient]}
                         >
-                          Apply
+                          {selectedModifications[ing.ingredient]
+                            ? "✓ Applied"
+                            : "Apply"}
                         </button>
                       </div>
                     </div>
@@ -6031,7 +8574,7 @@ const CustomizationModal = ({
           {customizations.length > 0 && (
             <div className="mb-4">
               <h3 className="font-semibold text-gray-700 mb-2">
-                Applied Customizations:
+                ✓ Applied Customizations:
               </h3>
               {customizations.map((cust, idx) => (
                 <div
@@ -6057,17 +8600,18 @@ const CustomizationModal = ({
           {/* Special Instructions */}
           <div className="mb-4">
             <h3 className="font-semibold text-gray-700 mb-2">
-              Special Instructions:
+              📝 Special Instructions:
             </h3>
             <textarea
               value={specialInstructions}
               onChange={(e) => setSpecialInstructions(e.target.value)}
-              placeholder="Any additional requests? (e.g., no salt, extra spicy, etc.)"
+              placeholder="Any additional requests? (e.g., no salt, extra well-done, etc.)"
               className="w-full p-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
               rows="2"
             />
           </div>
         </div>
+
         <div className="p-4 border-t flex gap-3">
           <button onClick={onClose} className="flex-1 border py-2 rounded-lg">
             Cancel
@@ -6087,6 +8631,123 @@ const CustomizationModal = ({
   );
 };
 
+// ========== CART MODAL ==========
+const CartModal = ({
+  isOpen,
+  onClose,
+  cart,
+  updateQuantity,
+  removeItem,
+  getTotal,
+  onCheckout,
+  tableInfo,
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col relative"
+      >
+        <div className="bg-orange-500 p-4 rounded-t-2xl flex justify-between items-center">
+          <h2 className="text-white font-bold text-xl flex items-center gap-2">
+            <CartIcon /> Your Order
+          </h2>
+          <button
+            onClick={onClose}
+            className="p-1 hover:bg-white/20 rounded-full"
+          >
+            <CloseIcon className="text-white" />
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4">
+          {cart.length === 0 ? (
+            <div className="text-center py-12">
+              <CartIcon className="text-gray-300 text-6xl mx-auto mb-4" />
+              <p className="text-gray-500">Your cart is empty</p>
+            </div>
+          ) : (
+            cart.map((item) => (
+              <div key={item.cartId} className="mb-3 pb-3 border-b">
+                <div className="flex justify-between">
+                  <div>
+                    <h3 className="font-semibold">{item.name}</h3>
+                    {item.customizations && item.customizations.length > 0 && (
+                      <div className="text-xs text-gray-500 mt-1">
+                        {item.customizations.map((c, i) => (
+                          <div key={i}>• {c}</div>
+                        ))}
+                      </div>
+                    )}
+                    {item.specialInstructions && (
+                      <p className="text-xs text-orange-600 mt-1">
+                        📝 {item.specialInstructions}
+                      </p>
+                    )}
+                  </div>
+                  <p className="text-orange-600 font-bold">
+                    RWF {item.finalPrice.toLocaleString()}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 mt-2">
+                  <button
+                    onClick={() =>
+                      updateQuantity(item.cartId, item.quantity - 1)
+                    }
+                    className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center"
+                  >
+                    <RemoveIcon fontSize="small" />
+                  </button>
+                  <span className="w-8 text-center">{item.quantity}</span>
+                  <button
+                    onClick={() =>
+                      updateQuantity(item.cartId, item.quantity + 1)
+                    }
+                    className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center"
+                  >
+                    <AddIcon fontSize="small" />
+                  </button>
+                  <button
+                    onClick={() => removeItem(item.cartId)}
+                    className="ml-2 text-red-500"
+                  >
+                    <DeleteIcon fontSize="small" />
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {cart.length > 0 && (
+          <div className="p-4 border-t">
+            <div className="flex justify-between font-bold mb-3">
+              <span>Total</span>
+              <span className="text-orange-600">
+                RWF {getTotal().toLocaleString()}
+              </span>
+            </div>
+            <button
+              onClick={onCheckout}
+              className="w-full bg-orange-500 text-white py-3 rounded-xl font-semibold hover:bg-orange-600 transition"
+            >
+              Confirm Order - Table {tableInfo.tableNumber}
+            </button>
+          </div>
+        )}
+      </motion.div>
+    </div>
+  );
+};
+
+// ========== ORDER DETAIL MODAL ==========
 const OrderDetailModal = ({ isOpen, onClose, order }) => {
   if (!isOpen || !order) return null;
 
@@ -6176,6 +8837,40 @@ const OrderDetailModal = ({ isOpen, onClose, order }) => {
   );
 };
 
+// ========== RESULT MODAL ==========
+const ResultModal = ({ isOpen, onClose, type, title, message }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center"
+      >
+        {type === "success" && (
+          <CheckCircleIcon className="text-green-500 text-6xl mx-auto mb-4" />
+        )}
+        {type === "error" && (
+          <ErrorIcon className="text-red-500 text-6xl mx-auto mb-4" />
+        )}
+        <h2 className="text-2xl font-bold mb-2">{title}</h2>
+        <p className="text-gray-600 whitespace-pre-line mb-6">{message}</p>
+        <button
+          onClick={onClose}
+          className="w-full bg-orange-500 text-white py-2 rounded-lg font-semibold"
+        >
+          OK
+        </button>
+      </motion.div>
+    </div>
+  );
+};
+
 // ========== MAIN MENU COMPONENT ==========
 export const Menu = () => {
   const [cart, setCart] = useState([]);
@@ -6186,7 +8881,7 @@ export const Menu = () => {
   const [showAnalysisModal, setShowAnalysisModal] = useState(false);
   const [showCustomModal, setShowCustomModal] = useState(false);
   const [selectedConditions, setSelectedConditions] = useState([]);
-  const [analysisResult, setAnalysisResult] = useState([]);
+  const [analysisResult, setAnalysisResult] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   const [activeCategory, setActiveCategory] = useState("all");
@@ -6220,34 +8915,15 @@ export const Menu = () => {
 
   useEffect(() => setCurrentPage(1), [activeCategory, search]);
 
-  // Handle item click - perform FDA analysis
+  // Handle item click - perform ingredient analysis
   const handleItemClick = async (item) => {
     setCurrentItem(item);
     setIsAnalyzing(true);
     setShowAnalysisModal(true);
 
-    const risks = [];
-    for (const ingredient of item.ingredients) {
-      const ingredientRisks = await searchIngredientOnline(
-        ingredient,
-        selectedConditions,
-      );
-      risks.push(...ingredientRisks);
-    }
-
-    const uniqueRisks = risks.filter(
-      (v, i, a) =>
-        a.findIndex(
-          (t) => t.condition === v.condition && t.message === v.message,
-        ) === i,
-    );
-    const severityOrder = { high: 3, moderate: 2, low: 1, info: 0 };
-    uniqueRisks.sort(
-      (a, b) =>
-        (severityOrder[b.severity] || 0) - (severityOrder[a.severity] || 0),
-    );
-
-    setAnalysisResult(uniqueRisks.slice(0, 5));
+    // Analyze ingredients against user's medical conditions
+    const analysis = analyzeDishForConditions(item, selectedConditions);
+    setAnalysisResult(analysis);
     setIsAnalyzing(false);
   };
 
@@ -6389,6 +9065,8 @@ export const Menu = () => {
         analysis={analysisResult}
         isLoading={isAnalyzing}
         onContinue={handleAnalysisContinue}
+        item={currentItem}
+        userConditions={selectedConditions}
       />
 
       <CustomizationModal
@@ -6397,6 +9075,18 @@ export const Menu = () => {
         item={currentItem}
         selectedConditions={selectedConditions}
         onAddToCart={addToCartWithCustomizations}
+        analysis={analysisResult}
+      />
+
+      <CartModal
+        isOpen={showCart}
+        onClose={() => setShowCart(false)}
+        cart={cart}
+        updateQuantity={updateQuantity}
+        removeItem={removeItem}
+        getTotal={getTotal}
+        onCheckout={handleCheckout}
+        tableInfo={tableInfo}
       />
 
       <OrderDetailModal
@@ -6405,137 +9095,13 @@ export const Menu = () => {
         order={activeOrder}
       />
 
-      {showResult.open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setShowResult({ ...showResult, open: false })}
-          />
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 text-center"
-          >
-            {showResult.type === "success" && (
-              <CheckCircleIcon className="text-green-500 text-6xl mx-auto mb-4" />
-            )}
-            {showResult.type === "error" && (
-              <ErrorIcon className="text-red-500 text-6xl mx-auto mb-4" />
-            )}
-            <h2 className="text-2xl font-bold mb-2">{showResult.title}</h2>
-            <p className="text-gray-600 whitespace-pre-line mb-6">
-              {showResult.message}
-            </p>
-            <button
-              onClick={() => setShowResult({ ...showResult, open: false })}
-              className="w-full bg-orange-500 text-white py-2 rounded-lg font-semibold"
-            >
-              OK
-            </button>
-          </motion.div>
-        </div>
-      )}
-
-      {showCart && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setShowCart(false)}
-          />
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col relative"
-          >
-            <div className="bg-orange-500 p-4 rounded-t-2xl flex justify-between items-center">
-              <h2 className="text-white font-bold text-xl flex items-center gap-2">
-                <CartIcon /> Your Cart
-              </h2>
-              <button
-                onClick={() => setShowCart(false)}
-                className="p-1 hover:bg-white/20 rounded-full"
-              >
-                <CloseIcon className="text-white" />
-              </button>
-            </div>
-            <div className="flex-1 overflow-y-auto p-4">
-              {cart.length === 0 ? (
-                <div className="text-center py-12">
-                  <CartIcon className="text-gray-300 text-6xl mx-auto mb-4" />
-                  <p className="text-gray-500">Your cart is empty</p>
-                </div>
-              ) : (
-                cart.map((item) => (
-                  <div key={item.cartId} className="mb-3 pb-3 border-b">
-                    <div className="flex justify-between">
-                      <div>
-                        <h3 className="font-semibold">{item.name}</h3>
-                        {item.customizations &&
-                          item.customizations.length > 0 && (
-                            <div className="text-xs text-gray-500 mt-1">
-                              {item.customizations.map((c, i) => (
-                                <div key={i}>• {c}</div>
-                              ))}
-                            </div>
-                          )}
-                        {item.specialInstructions && (
-                          <p className="text-xs text-orange-600 mt-1">
-                            📝 {item.specialInstructions}
-                          </p>
-                        )}
-                      </div>
-                      <p className="text-orange-600 font-bold">
-                        RWF {item.finalPrice.toLocaleString()}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2 mt-2">
-                      <button
-                        onClick={() =>
-                          updateQuantity(item.cartId, item.quantity - 1)
-                        }
-                        className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center"
-                      >
-                        <RemoveIcon fontSize="small" />
-                      </button>
-                      <span className="w-8 text-center">{item.quantity}</span>
-                      <button
-                        onClick={() =>
-                          updateQuantity(item.cartId, item.quantity + 1)
-                        }
-                        className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center"
-                      >
-                        <AddIcon fontSize="small" />
-                      </button>
-                      <button
-                        onClick={() => removeItem(item.cartId)}
-                        className="ml-2 text-red-500"
-                      >
-                        <DeleteIcon fontSize="small" />
-                      </button>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-            {cart.length > 0 && (
-              <div className="p-4 border-t">
-                <div className="flex justify-between font-bold mb-3">
-                  <span>Total</span>
-                  <span className="text-orange-600">
-                    RWF {getTotal().toLocaleString()}
-                  </span>
-                </div>
-                <button
-                  onClick={handleCheckout}
-                  className="w-full bg-orange-500 text-white py-3 rounded-xl font-semibold hover:bg-orange-600 transition"
-                >
-                  Confirm Order - Table {tableInfo.tableNumber}
-                </button>
-              </div>
-            )}
-          </motion.div>
-        </div>
-      )}
+      <ResultModal
+        isOpen={showResult.open}
+        onClose={() => setShowResult({ ...showResult, open: false })}
+        type={showResult.type}
+        title={showResult.title}
+        message={showResult.message}
+      />
 
       {activeOrder && (
         <FloatingTimer
@@ -6549,23 +9115,28 @@ export const Menu = () => {
 
       <div className="container mx-auto px-4 py-5 max-w-7xl">
         {/* Header */}
-        <div className="flex justify-between items-center flex-wrap gap-3 mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mb-6">
+          <div className="text-center sm:text-left">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2">
               <RestaurantIcon className="text-orange-500" /> NutriScan·AI
             </h1>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-500 text-xs sm:text-sm">
               Table {tableInfo.tableNumber}{" "}
-              {tableInfo.customerName && `· ${tableInfo.customerName}`} · FDA
-              Verified
+              {tableInfo.customerName && `· ${tableInfo.customerName}`} ·
+              AI-Powered Ingredient Analysis
             </p>
           </div>
           <div className="flex gap-2">
             <button
               onClick={() => setShowConditionModal(true)}
-              className={`p-2 rounded-full shadow-lg transition ${selectedConditions.length > 0 ? "bg-purple-500 text-white" : "bg-white text-purple-500"}`}
+              className={`relative p-2 rounded-full shadow-lg transition ${selectedConditions.length > 0 ? "bg-purple-500 text-white" : "bg-white text-purple-500"}`}
             >
               <HealthIcon />
+              {selectedConditions.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                  {selectedConditions.length}
+                </span>
+              )}
             </button>
             <button
               onClick={() => setShowCart(true)}
@@ -6581,21 +9152,23 @@ export const Menu = () => {
           </div>
         </div>
 
-        {/* Health Banner */}
+        {/* Health Banner - Shows selected conditions */}
         {selectedConditions.length > 0 && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-4 flex justify-between items-center flex-wrap gap-2">
-            <div className="flex items-center gap-2">
-              <ShieldIcon className="text-emerald-600" />
-              <span className="text-sm text-emerald-800">
-                Personalized for: {selectedConditions.join(", ")}
-              </span>
+          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <ShieldIcon className="text-emerald-600 flex-shrink-0" />
+                <span className="text-sm text-emerald-800 break-words">
+                  🛡️ Personalized for: {selectedConditions.join(", ")}
+                </span>
+              </div>
+              <button
+                onClick={() => setShowConditionModal(true)}
+                className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap"
+              >
+                Update Conditions
+              </button>
             </div>
-            <button
-              onClick={() => setShowConditionModal(true)}
-              className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium"
-            >
-              Update
-            </button>
           </div>
         )}
 
@@ -6603,7 +9176,7 @@ export const Menu = () => {
         <div className="relative mb-4">
           <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
-            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-orange-500 bg-white shadow-sm"
+            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-orange-500 bg-white shadow-sm text-sm sm:text-base"
             placeholder="Search dishes..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -6611,12 +9184,16 @@ export const Menu = () => {
         </div>
 
         {/* Categories */}
-        <div className="flex gap-2 overflow-auto pb-2 mb-4">
+        <div className="flex gap-2 overflow-x-auto pb-2 mb-4 scrollbar-thin">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-full whitespace-nowrap transition font-medium text-sm ${activeCategory === cat ? "bg-orange-500 text-white shadow-md" : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"}`}
+              className={`px-3 sm:px-4 py-1.5 rounded-full whitespace-nowrap transition font-medium text-xs sm:text-sm ${
+                activeCategory === cat
+                  ? "bg-orange-500 text-white shadow-md"
+                  : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"
+              }`}
             >
               {cat === "all" ? "All Items" : cat}
             </button>
@@ -6624,7 +9201,7 @@ export const Menu = () => {
         </div>
 
         {/* Menu Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
           {paginated.map((item) => (
             <motion.div
               whileHover={{ scale: 1.02 }}
@@ -6635,16 +9212,18 @@ export const Menu = () => {
             >
               <img
                 src={item.image}
-                className="h-36 w-full object-cover"
+                className="h-32 sm:h-36 md:h-40 w-full object-cover"
                 alt={item.name}
               />
               <div className="p-3">
-                <h3 className="font-bold text-gray-800">{item.name}</h3>
+                <h3 className="font-bold text-gray-800 text-sm sm:text-base">
+                  {item.name}
+                </h3>
                 <p className="text-xs text-gray-500 line-clamp-1 mt-1">
                   {item.description}
                 </p>
                 <div className="flex justify-between items-center mt-2">
-                  <span className="text-orange-600 font-bold">
+                  <span className="text-orange-600 font-bold text-sm sm:text-base">
                     RWF {item.price.toLocaleString()}
                   </span>
                   <span className="text-gray-400 text-xs flex items-center gap-1">
@@ -6665,7 +9244,7 @@ export const Menu = () => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="flex justify-center gap-2 mt-6 flex-wrap">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
               disabled={currentPage === 1}
