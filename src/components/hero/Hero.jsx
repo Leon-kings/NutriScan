@@ -531,295 +531,56 @@ export const Hero = () => {
             </motion.button>
           </div>
         </div>
+      </div>
 
-        {/* Slider Controls */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 p-2 rounded-full transition z-20"
+      {/* Steps Section */}
+ <div 
+      className="py-20 bg-gray-50 relative"
+      style={{
+        backgroundImage: "url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=1000')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Semi-transparent overlay to make the salad image NOT clearly visible */}
+      <div className="absolute inset-0 bg-gray-50/70"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
         >
-          <NavigateBeforeIcon className="text-white text-3xl" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 p-2 rounded-full transition z-20"
-        >
-          <NavigateNextIcon className="text-white text-3xl" />
-        </button>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            How It Works
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Experience the future of dining with our 10-step AI-powered
+            ordering system
+          </p>
+        </motion.div>
 
-        {/* Slide Indicators */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition ${
-                currentSlide === index ? "bg-white w-6" : "bg-white/50"
-              }`}
+        <div className="grid md:grid-cols-2 gap-6">
+          {steps.map((step, index) => (
+            <StepCard
+              key={step.number}
+              number={step.number}
+              title={step.title}
+              description={step.description}
+              icon={step.icon}
+              color={step.color}
+              delay={index * 0.05}
             />
           ))}
         </div>
       </div>
-
-      {/* Steps Section */}
-      <div className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-              How It Works
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Experience the future of dining with our 10-step AI-powered
-              ordering system
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {steps.map((step, index) => (
-              <StepCard
-                key={step.number}
-                number={step.number}
-                title={step.title}
-                description={step.description}
-                icon={step.icon}
-                color={step.color}
-                delay={index * 0.05}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Interactive Demo Section */}
-      <div className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Try Our AI Ordering System
-            </h2>
-            <p className="text-xl text-gray-600">
-              Experience steps 2-10 with our interactive demo
-            </p>
-          </motion.div>
-
-          {/* Menu Selection */}
-          {!selectedMeal && (
-            <div className="grid md:grid-cols-4 gap-6">
-              {meals.map((meal) => (
-                <motion.div
-                  key={meal.id}
-                  whileHover={{ scale: 1.05 }}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer border-2 border-transparent hover:border-orange-500 transition"
-                  onClick={() => analyzeMeal(meal)}
-                >
-                  <img
-                    src={meal.image}
-                    alt={meal.name}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-4">
-                    <h3 className="text-xl font-bold mb-1">{meal.name}</h3>
-                    <p className="text-gray-600 text-sm mb-2">
-                      {meal.ingredients.substring(0, 60)}...
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-2xl font-bold text-orange-600">
-                        {meal.price}
-                      </span>
-                      <span className="text-sm text-gray-500">
-                        ⏱️ {meal.prepTime} min
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
-
-          {/* AI Analysis */}
-          {aiAnalysis && selectedMeal && !modifications.length && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 max-w-2xl mx-auto"
-            >
-              <div className="flex items-center space-x-3 mb-6">
-                <SmartToyIcon className="text-4xl text-purple-600" />
-                <h3 className="text-2xl font-bold text-gray-800">
-                  AI Health Analysis
-                </h3>
-              </div>
-              <p className="text-gray-700 mb-4">
-                This meal may affect the following conditions:
-              </p>
-              <div className="space-y-3 mb-6">
-                {aiAnalysis.conditions?.map((condition) => (
-                  <label
-                    key={condition}
-                    className="flex items-center space-x-3 p-3 bg-white rounded-lg cursor-pointer hover:bg-gray-50"
-                  >
-                    <input
-                      type="checkbox"
-                      value={condition}
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setSelectedConditions([
-                            ...selectedConditions,
-                            condition,
-                          ]);
-                        } else {
-                          setSelectedConditions(
-                            selectedConditions.filter((c) => c !== condition),
-                          );
-                        }
-                      }}
-                      className="w-5 h-5 text-purple-600 rounded"
-                    />
-                    <span className="text-gray-700">{condition}</span>
-                  </label>
-                ))}
-              </div>
-              <button
-                onClick={getModifications}
-                className="w-full bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition"
-              >
-                Continue with Selected Conditions
-              </button>
-            </motion.div>
-          )}
-
-          {/* Modifications Selection */}
-          {modifications.length > 0 && !orderStatus && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 max-w-2xl mx-auto"
-            >
-              <div className="flex items-center space-x-3 mb-6">
-                <SecurityIcon className="text-4xl text-green-600" />
-                <h3 className="text-2xl font-bold text-gray-800">
-                  Suggested Modifications
-                </h3>
-              </div>
-              <div className="space-y-3 mb-6">
-                {modifications.map((mod) => (
-                  <label
-                    key={mod.id}
-                    className="flex items-center space-x-3 p-3 bg-white rounded-lg cursor-pointer hover:bg-gray-50"
-                  >
-                    <input
-                      type="checkbox"
-                      className="w-5 h-5 text-green-600 rounded"
-                    />
-                    <span className="flex-1 text-gray-700">
-                      {mod.description}
-                    </span>
-                    {mod.extraTime > 0 && (
-                      <span className="text-sm text-orange-600">
-                        +{mod.extraTime} min
-                      </span>
-                    )}
-                  </label>
-                ))}
-              </div>
-              <button
-                onClick={() => placeOrder(modifications)}
-                className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition"
-              >
-                Confirm Order with Modifications
-              </button>
-            </motion.div>
-          )}
-
-          {/* Order Status & Timer */}
-          {orderStatus && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-8 max-w-md mx-auto text-center"
-            >
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                Order Status
-              </h3>
-              <div className="bg-white p-4 rounded-xl mb-4">
-                <p className="text-gray-600">
-                  Order ID:{" "}
-                  <span className="font-mono">{orderStatus.orderId}</span>
-                </p>
-                <p className="text-gray-600">
-                  Status:
-                  <span
-                    className={`font-semibold ${
-                      orderStatus.status === "pending"
-                        ? "text-yellow-600"
-                        : orderStatus.status === "ready"
-                          ? "text-green-600"
-                          : "text-blue-600"
-                    }`}
-                  >
-                    {" "}
-                    {orderStatus.status}
-                  </span>
-                </p>
-              </div>
-              {timer !== null && (
-                <div className="mb-6">
-                  <TimerIcon className="text-5xl text-orange-600 mx-auto mb-3 animate-pulse" />
-                  <p className="text-5xl font-bold text-orange-600 font-mono">
-                    {Math.floor(timer / 60)}:
-                    {String(timer % 60).padStart(2, "0")}
-                  </p>
-                  <p className="text-gray-600 mt-2">
-                    Estimated time until ready
-                  </p>
-                </div>
-              )}
-              {orderStatus.status === "ready" && (
-                <button
-                  onClick={handlePayment}
-                  className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3 rounded-xl font-semibold hover:from-cyan-700 hover:to-blue-700 transition flex items-center justify-center space-x-2"
-                >
-                  <PaymentIcon />
-                  <span>Pay Now - {selectedMeal?.price}</span>
-                </button>
-              )}
-            </motion.div>
-          )}
-
-          {/* Reset Button */}
-          {(selectedMeal || modifications.length > 0 || orderStatus) && (
-            <div className="text-center mt-8">
-              <button
-                onClick={() => {
-                  setSelectedMeal(null);
-                  setAiAnalysis(null);
-                  setSelectedConditions([]);
-                  setModifications([]);
-                  setOrderStatus(null);
-                  setTimer(null);
-                }}
-                className="text-gray-500 hover:text-gray-700 underline"
-              >
-                Start Over
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
+    </div>
 
       {/* Manager Weekly Report Section */}
-      <div className="py-20 bg-gradient-to-r from-gray-900 to-gray-800 text-white">
+      <div className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -828,7 +589,7 @@ export const Hero = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl font-bold mb-4">Manager Weekly Report</h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-800 mb-8 max-w-3xl mx-auto">
               Every week, the system automatically counts how many times each
               meal was modified and which modifications were most popular.
               Managers can select one modification to be added to the menu as a
@@ -837,17 +598,16 @@ export const Hero = () => {
             <div className="bg-white/10 rounded-2xl p-8 inline-block">
               <div className="flex items-center space-x-4">
                 <div className="text-left">
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-gray-600">
                     Most Popular Modification This Week
                   </p>
                   <p className="text-2xl font-bold text-yellow-400">
                     "Remove Peanuts"
                   </p>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-gray-600">
                     Applied to 47 orders | +12% customer satisfaction
                   </p>
                 </div>
-            
               </div>
             </div>
           </motion.div>
@@ -862,5 +622,3 @@ export const Hero = () => {
     </>
   );
 };
-
-
