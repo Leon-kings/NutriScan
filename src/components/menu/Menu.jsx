@@ -22159,29 +22159,6 @@ export const Menu = () => {
     }
   };
 
-  // Slider items from API or fallback
-  const sliderItems = menuItems.slice(0, 5).map((item) => ({
-    id: item.id,
-    name: item.name,
-    category: item.category,
-    price: `${item.price.toLocaleString()} RWF`,
-    image: item.image,
-    description: item.description,
-  }));
-
-  if (sliderItems.length === 0) {
-    sliderItems.push({
-      id: 1,
-      name: "Delicious Meals",
-      category: "Various Categories",
-      price: "From 2,800 RWF",
-      image:
-        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&h=600&fit=crop",
-      description:
-        "Explore our wide range of delicious dishes with AI-powered health insights.",
-    });
-  }
-
   return (
     <div
       className={`w-full min-h-screen ${
@@ -22338,9 +22315,7 @@ export const Menu = () => {
           </div>
         </div>
 
-        {!isLoadingMenu && sliderItems.length > 0 && (
-          <Slider autoPlay={true} interval={5000} items={sliderItems} />
-        )}
+        <Slider autoPlay={true} interval={5000} />
 
         <motion.div
           initial={{ y: -10, opacity: 0 }}
