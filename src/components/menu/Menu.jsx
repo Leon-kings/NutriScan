@@ -12867,7 +12867,7 @@ export const Menu = () => {
 
   return (
     <div
-      className={`w-full min-h-screen ${CATEGORY_BG[activeCategory === "all" ? "default" : activeCategory] || CATEGORY_BG.default} relative`}
+      className={`w-full sm:w-full xl:w-full 2xl:w-full md:w-full lg:w-full min-h-screen ${CATEGORY_BG[activeCategory === "all" ? "default" : activeCategory] || CATEGORY_BG.default} relative`}
     >
       <ToastContainer position="bottom-right" autoClose={5000} />
       <AnimatePresence>
