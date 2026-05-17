@@ -6,7 +6,7 @@ import { Footer } from "./components/footer/Footer";
 export default function App() {
   return (
     <>
-      <div className="w-full">
+      <div className="w-full sm:w-full xl:w-full 2xl:w-full md:w-full lg:w-full">
         <Menu />
         <Footer/>
       </div>

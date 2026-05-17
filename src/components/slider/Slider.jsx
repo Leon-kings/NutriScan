@@ -131,7 +131,7 @@ export const Slider = ({ items = [], autoPlay = true, interval = 5000 }) => {
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-xl"
+      className="relative w-full overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-3xl xl:w-full sm:w-full shadow-xl"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
@@ -139,7 +139,7 @@ export const Slider = ({ items = [], autoPlay = true, interval = 5000 }) => {
       onTouchEnd={handleTouchEnd}
     >
       {/* Slider Container */}
-      <div className="relative h-[250px] xs:h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] xl:h-[550px] overflow-hidden">
+      <div className="relative w-full h-[250px] xs:h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] xl:h-[550px] overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -153,7 +153,7 @@ export const Slider = ({ items = [], autoPlay = true, interval = 5000 }) => {
             <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
               style={{
-                backgroundImage: `url(${sliderItems[currentIndex].image})`,
+                backgroundImage: `url(${sliderItems[currentIndex].image})`,width:`100%`,
               }}
             >
               {/* Dark Overlay for better text readability */}
