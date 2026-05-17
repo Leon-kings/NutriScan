@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-size: 16px;
   width: 100%;
   padding: 0px;
@@ -8,4 +8,44 @@
   border: 2px solid transparent;
   transition: border-color 0.3s;
   margin-bottom: 24px;
+} */
+
+
+
+
+
+
+
+
+
+/* App.css */
+
+:root {
+  font-size: 16px;
+}
+
+/* Prevent width issues without changing design */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Keep your layout stable */
+#root {
+  width: 100%;
+  max-width: 100%;
 }
